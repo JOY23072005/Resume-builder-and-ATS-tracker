@@ -1,0 +1,34 @@
+{
+  "name": "resume-builder-backend",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "resume",
+    "builder",
+    "ats",
+    "scorer",
+    "AI",
+    "powered"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "\"https://github.com/JOY23072005/Resume-builder-and-ATS-tracker\""
+  },
+  "license": "ISC",
+  "author": "JOY23072005",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "google-auth-library": "^10.7.0",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^8.0.10",
+    "pg": "^8.21.0"
+  }
+}
