@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { login } from "../services/auth.service.js";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
+  const {setUser} = useAuth();
 
   const [form, setForm] = useState({
     email: "",
@@ -19,6 +21,8 @@ export default function Login() {
       "token",
       res.data.token
     );
+
+    setUser(res.data.user);
 
     navigate("/");
   };

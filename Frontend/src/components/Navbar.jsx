@@ -5,7 +5,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex justify-between p-4 border-b">
+    <nav className="flex justify-between backdrop-blur-xs p-4 border-b">
       <Link to="/">
         Resume Builder
       </Link>

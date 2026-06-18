@@ -5,13 +5,14 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-
+import {AuthProvider} from "./context/AuthContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 function App() {
   return (
+  <AuthProvider>
     <BrowserRouter>
       <Navbar />
 
@@ -30,8 +31,9 @@ function App() {
           path="/signup"
           element={<Signup />}
         />
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
