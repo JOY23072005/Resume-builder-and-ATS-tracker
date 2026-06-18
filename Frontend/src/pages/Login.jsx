@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { login } from "../services/auth.service.js";
-import { useNavigate } from "react-router-dom";
+import { login,sendVerificationOtp } from "../services/auth.service.js";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import EmailVerify from "./EmailVerify.jsx";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,24 +17,53 @@ export default function Login() {
   const submit = async (e) => {
     e.preventDefault();
 
-    const res = await login(form);
+    try {
+      const res = await login(form);
 
-    localStorage.setItem(
-      "token",
-      res.data.token
-    );
+      localStorage.setItem(
+        "token",
+        res.data.token
+      );
 
-    setUser(res.data.user);
+      setUser(res.data.user);
 
-    navigate("/");
+      navigate("/");
+    }
+    catch (error) {
+
+      if (error.response?.status === 403) {
+        let email = form.email;
+        try {
+          await sendVerificationOtp({
+              email,
+          });
+        } catch (error) {
+          toast.error("Failed to send OTP please resend otp");
+        }
+
+        navigate(
+          "/verify-email",
+          {
+            state: {
+              email: form.email
+            }
+          }
+        );
+
+        return;
+      }
+
+    }
   };
 
   return (
     <form
       onSubmit={submit}
-      className="max-w-md mx-auto mt-10"
+      className="max-w-md mx-auto mt-10 text-foreground"
     >
       <input
+        autoComplete="johndoe@gmail.com"
+        name="Email"
         placeholder="Email"
         className="border p-2 w-full"
         onChange={(e) =>
@@ -44,6 +75,7 @@ export default function Login() {
       />
 
       <input
+        name="password"
         type="password"
         placeholder="Password"
         className="border p-2 w-full mt-3"
