@@ -1,29 +1,142 @@
 import api from "./api";
+import toast from "react-hot-toast";
 
-export const signup = (data) =>
-  api.post("/auth/signup", data);
+const handleError = (error) => {
+  const message =
+    error.response?.data?.message ||
+    "Something went wrong";
 
-export const login = (data) =>
-  api.post("/auth/login", data);
+  toast.error(message);
 
-export const sendVerificationOtp = (data) =>
-  api.post("/auth/send-verification-otp", data);
+  throw error;
+};
 
-export const verifyEmail = (data) =>
-  api.post("/auth/verify-email", data);
+export const signup = async (data) => {
+  try {
+    const res = await api.post(
+      "/auth/signup",
+      data
+    );
 
-export const forgotPassword = (data) =>
-  api.post("/auth/forgot-password", data);
+    toast.success(res.data.message);
 
-export const verifyResetOtp = (data) =>
-  api.post("/auth/verify-reset-otp", data);
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
 
-export const resetPassword = (data) =>
-  api.post("/auth/reset-password", data);
+export const login = async (data) => {
+  try {
+    const res = await api.post(
+      "/auth/login",
+      data
+    );
 
-export const getMe = (token) =>
-  api.get("/user/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    toast.success(res.data.message);
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const sendVerificationOtp = async (
+  data
+) => {
+  try {
+    const res = await api.post(
+      "/auth/send-verification-otp",
+      data
+    );
+
+    toast.success(res.data.message);
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const verifyEmail = async (data) => {
+  try {
+    const res = await api.post(
+      "/auth/verify-email",
+      data
+    );
+
+    toast.success(res.data.message);
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const forgotPassword = async (
+  data
+) => {
+  try {
+    const res = await api.post(
+      "/auth/forgot-password",
+      data
+    );
+
+    toast.success(res.data.message);
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const verifyResetOtp = async (
+  data
+) => {
+  try {
+    const res = await api.post(
+      "/auth/verify-reset-otp",
+      data
+    );
+
+    toast.success("OTP verified");
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const resetPassword = async (
+  data
+) => {
+  try {
+    const res = await api.post(
+      "/auth/reset-password",
+      data
+    );
+
+    toast.success(res.data.message);
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getMe = async (token) => {
+  try {
+    const res = await api.get(
+      "/user/me",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+};
