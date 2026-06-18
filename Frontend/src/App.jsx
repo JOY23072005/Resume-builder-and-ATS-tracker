@@ -9,6 +9,7 @@ import {AuthProvider} from "./context/AuthContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ProtectedRoute from "./components/ProtectedRoute"
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home />}
+          element={<ProtectedRoute><Home /></ProtectedRoute>}
         />
 
         <Route
