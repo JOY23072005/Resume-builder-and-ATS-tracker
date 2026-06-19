@@ -1,4 +1,4 @@
-export default function AuthButton({
+export default function Button({
   children,
   type = "submit",
 }) {

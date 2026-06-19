@@ -4,13 +4,14 @@ import {
   Route,
 } from "react-router-dom";
 
-import RootLayout from "./components/layout/RootLayout";
+import RootLayout from "./layout/RootLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import ProtectedRoute from "./components/layout/ProtectedRoute"
+import ProtectedRoute from "./layout/ProtectedRoute"
 import EmailVerify from "./pages/EmailVerify";
 import ForgotPassword from "./pages/ForgotPassword";
+import PublicRoute from "./layout/PublicRoute";
 
 
 function App() {
@@ -27,10 +28,39 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/verify-email" element={<EmailVerify />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <PublicRoute>
+                <Signup />
+              </PublicRoute>
+            }
+          />
+
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route 
+            path="/verify-email" 
+            element={
+              <PublicRoute>
+                <EmailVerify />
+              </PublicRoute>
+            } />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-export default function AuthInput({
+export default function Input({
   type = "text",
   placeholder,
   value,

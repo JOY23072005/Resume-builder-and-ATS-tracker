@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { signup,sendVerificationOtp } from "../services/auth.service.js";
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
+import AuthCard from "../cards/AuthCard.jsx";
+import Form from "../components/Form.jsx";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -43,7 +45,7 @@ export default function Signup() {
       title="Create Account"
       subtitle="Build ATS friendly resumes"
     >
-      <AuthForm
+      <Form
         fields={[
           {
             name: "name",

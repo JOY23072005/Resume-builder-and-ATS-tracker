@@ -4,8 +4,8 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import EmailVerify from "./EmailVerify.jsx";
 import toast from "react-hot-toast";
-import AuthCard from "../components/auth/AuthCard.jsx";
-import AuthForm from "../components/auth/AuthForm.jsx";
+import AuthCard from "../cards/AuthCard.jsx";
+import Form from "../components/Form.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ export default function Login() {
       title="Welcome Back"
       subtitle="Sign in to continue"
     >
-      <AuthForm
+      <Form
         fields={[
           {
             name: "email",

@@ -7,6 +7,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 import toast from "react-hot-toast";
+import Button from "../components/Button";
 
 export default function EmailVerify() {
     const location = useLocation();
@@ -52,46 +53,46 @@ export default function EmailVerify() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-10 space-y-4">
-        <h1 className="text-3xl font-bold">
-            Verify Email
-        </h1>
+        <div className="max-w-md flex flex-1 flex-col justify-center mx-auto space-y-4">
+            <h1 className="text-3xl font-bold">
+                Verify Email
+            </h1>
 
-        <p className="text-gray-500">
-            OTP sent to:
-        </p>
+            <p className="text-gray-500">
+                OTP sent to:
+            </p>
 
-        <p className="font-medium">
-            {email}
-        </p>
+            <p className="font-medium">
+                {email}
+            </p>
 
-        <form
-            onSubmit={handleVerify}
-            className="space-y-4"
-        >
-            <input
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) =>
-                setOtp(e.target.value)
-            }
-            className="border p-2 w-full"
-            />
+            <form
+                onSubmit={handleVerify}
+                className="space-y-4"
+            >
+                <input
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) =>
+                    setOtp(e.target.value)
+                }
+                className="border p-2 w-full"
+                />
+
+                <Button
+                className="bg-black text-white px-4 py-2 rounded w-full"
+                >
+                Verify Email
+                </Button>
+            </form>
 
             <button
-            className="bg-black text-white px-4 py-2 rounded w-full"
+                onClick={handleResendOtp}
+                className="text-blue-500 text-left"
             >
-            Verify Email
+                Resend OTP
             </button>
-        </form>
-
-        <button
-            onClick={handleResendOtp}
-            className="text-blue-500"
-        >
-            Resend OTP
-        </button>
         </div>
     );
 }

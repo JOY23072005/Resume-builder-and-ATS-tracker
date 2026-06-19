@@ -1,8 +1,8 @@
 import { useState } from "react";
-import AuthCard from "../components/auth/AuthCard";
-import AuthForm from "../components/auth/AuthForm";
-import AuthInput from "../components/auth/AuthInput";
-import AuthButton from "../components/auth/AuthButton";
+import AuthCard from "../cards/AuthCard";
+import AuthForm from "../components/Form";
+import AuthInput from "../components/Input";
+import AuthButton from "../components/Button";
 
 import {
   forgotPassword,

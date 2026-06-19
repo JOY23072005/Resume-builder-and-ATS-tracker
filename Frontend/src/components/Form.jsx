@@ -1,7 +1,7 @@
-import AuthInput from "./AuthInput";
-import AuthButton from "./AuthButton";
+import Input from "./Input";
+import Button from "./Button";
 
-export default function AuthForm({
+export default function Form({
   fields,
   values,
   setValues,
@@ -14,7 +14,7 @@ export default function AuthForm({
       onSubmit={onSubmit}
     >
       {fields.map((field) => (
-        <AuthInput
+        <Input
           key={field.name}
           type={field.type}
           placeholder={field.placeholder}
@@ -29,9 +29,9 @@ export default function AuthForm({
         />
       ))}
 
-      <AuthButton>
+      <Button>
         {buttonText}
-      </AuthButton>
+      </Button>
     </form>
   );
 }
