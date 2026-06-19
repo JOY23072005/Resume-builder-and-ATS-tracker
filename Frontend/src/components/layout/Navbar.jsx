@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ThemeToggle from "./ThemeToggle";
+import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../ThemeToggle";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex justify-between backdrop-blur-xs p-4 border-b">
-      <Link to="/">
-        Resume Builder
+    <nav className="flex justify-between items-center backdrop-blur-xs p-4 border-b">
+      <Link className="flex gap-2  items-center" to="/">
+        <img 
+                className="h-8 w-8" 
+                src="/logo-only.png" 
+                alt="Logo"
+            />
+          Resume Builder AI
       </Link>
 
       <div className="flex gap-4">

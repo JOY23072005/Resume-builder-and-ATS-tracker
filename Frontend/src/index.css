@@ -12,7 +12,6 @@
   --color-card: hsl(var(--card));
 }
 
-
 @layer base{
   :root{
     --background: 210 40% 98%;
@@ -20,7 +19,8 @@
 
     --card: 0 0% 100%;
 
-    --primary:250 47% 60%;
+    /* Changed to your image's exact HSL: 196, 67%, 45% */
+    --primary: 196 67% 45%;
     --primary-foreground: 210 40% 98%;
 
     --border: 214 32% 91%;
@@ -31,15 +31,15 @@
 
     --card: 222 47% 8%;
 
-    --primary: 250 65% 65%;
-    --primary-foreground: 312 31% 91%;
+    /* Slightly boosted lightness (55%) for better visibility on dark backgrounds */
+    --primary: 196 67% 55%; 
+    --primary-foreground: 222 47% 4%;
 
     --border: 217 33% 20%;
   }
 
   * {
     @apply border-border;
-
   }
   html {
     @apply scroll-smooth;

@@ -14,7 +14,7 @@ export default function Signup() {
   const submit = async (e) => {
     try{
       e.preventDefault();
-      let email = form.email;
+      const email = form.email;
       await signup(form);
 
       try {
@@ -39,52 +39,49 @@ export default function Signup() {
   };
 
   return (
-    <form
-      onSubmit={submit}
-      className="max-w-md mx-auto mt-10 text-foreground"
+    <AuthCard
+      title="Create Account"
+      subtitle="Build ATS friendly resumes"
     >
-      <input
-        autoComplete="John Doe"
-        name="Name"
-        placeholder="Name"
-        className="border p-2 w-full"
-        onChange={(e) =>
-          setForm({
-            ...form,
-            name: e.target.value,
-          })
-        }
+      <AuthForm
+        fields={[
+          {
+            name: "name",
+            placeholder: "Full Name",
+          },
+          {
+            name: "email",
+            placeholder: "Email",
+          },
+          {
+            name: "password",
+            type: "password",
+            placeholder: "Password",
+          },
+        ]}
+        values={form}
+        setValues={setForm}
+        buttonText="Create Account"
+        onSubmit={submit}
       />
 
-      <input
-        autoComplete="johndoe@gmail.com"
-        name="Email"
-        placeholder="Email"
-        className="border p-2 w-full mt-3"
-        onChange={(e) =>
-          setForm({
-            ...form,
-            email: e.target.value,
-          })
-        }
-      />
+      <div className="mt-6 text-center text-sm">
 
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        className="border p-2 w-full mt-3"
-        onChange={(e) =>
-          setForm({
-            ...form,
-            password: e.target.value,
-          })
-        }
-      />
+        Already have an account?
 
-      <button className="mt-4 bg-black text-white px-4 py-2">
-        Signup
-      </button>
-    </form>
+        <Link
+          className="
+          text-primary
+          ml-2
+          hover:underline
+          "
+          to="/login"
+        >
+          Login
+        </Link>
+
+      </div>
+
+    </AuthCard>
   );
 }

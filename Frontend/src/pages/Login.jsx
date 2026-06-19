@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { login,sendVerificationOtp } from "../services/auth.service.js";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import EmailVerify from "./EmailVerify.jsx";
 import toast from "react-hot-toast";
+import AuthCard from "../components/auth/AuthCard.jsx";
+import AuthForm from "../components/auth/AuthForm.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ export default function Login() {
     catch (error) {
 
       if (error.response?.status === 403) {
-        let email = form.email;
+        const email = form.email;
         try {
           await sendVerificationOtp({
               email,
@@ -57,39 +59,52 @@ export default function Login() {
   };
 
   return (
-    <form
-      onSubmit={submit}
-      className="max-w-md mx-auto mt-10 text-foreground"
+    <AuthCard
+      title="Welcome Back"
+      subtitle="Sign in to continue"
     >
-      <input
-        autoComplete="johndoe@gmail.com"
-        name="Email"
-        placeholder="Email"
-        className="border p-2 w-full"
-        onChange={(e) =>
-          setForm({
-            ...form,
-            email: e.target.value,
-          })
-        }
+      <AuthForm
+        fields={[
+          {
+            name: "email",
+            placeholder: "Email",
+          },
+          {
+            name: "password",
+            type: "password",
+            placeholder: "Password",
+          },
+        ]}
+        values={form}
+        setValues={setForm}
+        buttonText="Sign In"
+        onSubmit={submit}
       />
 
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        className="border p-2 w-full mt-3"
-        onChange={(e) =>
-          setForm({
-            ...form,
-            password: e.target.value,
-          })
-        }
-      />
+      <div className="mt-6 flex justify-between text-sm">
 
-      <button className="mt-4 bg-black text-white px-4 py-2">
-        Login
-      </button>
-    </form>
+        <Link
+          to="/forgot-password"
+          className="
+          text-primary
+          hover:underline
+          "
+        >
+          Forgot Password?
+        </Link>
+
+        <Link
+          to="/signup"
+          className="
+          text-primary
+          hover:underline
+          "
+        >
+          Create Account
+        </Link>
+
+      </div>
+
+    </AuthCard>   
   );
 }
