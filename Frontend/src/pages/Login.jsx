@@ -6,6 +6,7 @@ import EmailVerify from "./EmailVerify.jsx";
 import toast from "react-hot-toast";
 import AuthCard from "../cards/AuthCard.jsx";
 import Form from "../components/Form.jsx";
+import GoogleAuthButton from "../components/GoogleAuthButton";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -80,6 +81,8 @@ export default function Login() {
         buttonText="Sign In"
         onSubmit={submit}
       />
+      
+      <GoogleAuthButton />
 
       <div className="mt-6 flex justify-between text-sm">
 

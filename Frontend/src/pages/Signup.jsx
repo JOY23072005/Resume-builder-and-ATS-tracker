@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import {Link,useNavigate} from "react-router-dom";
 import AuthCard from "../cards/AuthCard.jsx";
 import Form from "../components/Form.jsx";
+import GoogleAuthButton from "../components/GoogleAuthButton.jsx";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -67,6 +68,8 @@ export default function Signup() {
         onSubmit={submit}
       />
 
+      <GoogleAuthButton/>
+      
       <div className="mt-6 text-center text-sm">
 
         Already have an account?

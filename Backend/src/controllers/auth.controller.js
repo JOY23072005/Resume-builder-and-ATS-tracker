@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { pool } from "../config/db.js";
 import { generateToken } from "../utils/jwt.js";
-import { OAuth2Client } from "google-auth-library";
+import { client } from "../utils/google.js";
 import { generateOtp } from "../utils/otp.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
@@ -451,87 +451,100 @@ export const resetPassword = async (
   }
 };
 
-const client = new OAuth2Client(
-  process.env.GOOGLE_CLIENT_ID
-);
-
-export const googleAuth = async (
+export const googleLogin = async (
   req,
   res
 ) => {
   try {
-    const { token } = req.body;
+    const { credential } = req.body;
 
+    if(!credential){
+      return res.status(403).json({
+        success:false,
+        message:"Please provide credentials"
+      })
+    }
+    
     const ticket =
       await client.verifyIdToken({
-        idToken: token,
-        audience: process.env.GOOGLE_CLIENT_ID,
+        idToken: credential,
+        audience:
+          process.env.GOOGLE_CLIENT_ID,
       });
 
     const payload = ticket.getPayload();
 
     const {
-      email,
-      name,
-      picture,
       sub,
+      name,
+      email,
+      picture,
     } = payload;
 
-    let user = await pool.query(
+    let result = await pool.query(
       `
       SELECT *
       FROM users
-      WHERE email = $1
+      WHERE email=$1
       `,
       [email]
     );
 
-    if (!user.rows.length) {
-      user = await pool.query(
-        `
-        INSERT INTO users (
-          name,
-          email,
-          avatar_url,
-          google_id,
-          is_verified,
-          verified_at
-        )
-        VALUES (
-          $1,
-          $2,
-          $3,
-          $4,
-          true,
-          NOW()
-        )
-        RETURNING *
-        `,
-        [
-          name,
-          email,
-          picture,
-          sub,
-        ]
-      );
+    let user;
+
+    if (result.rows.length === 0) {
+      const newUser =
+        await pool.query(
+          `
+          INSERT INTO users
+          (
+            name,
+            email,
+            avatar_url,
+            google_id,
+            is_verified,
+            verified_at
+          )
+          VALUES
+          (
+            $1,
+            $2,
+            $3,
+            $4,
+            true,
+            NOW()
+          )
+          RETURNING *
+          `,
+          [
+            name,
+            email,
+            picture,
+            sub,
+          ]
+        );
+
+      user = newUser.rows[0];
+    } else {
+      user = result.rows[0];
     }
 
-    const dbUser = user.rows[0];
+    const token = generateToken(
+      user.id
+    );
 
-    const jwtToken =
-      generateToken(dbUser.id);
-
-    res.json({
+    return res.json({
       success: true,
-      token: jwtToken,
-      user: dbUser,
+      token,
+      user,
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
 
     res.status(500).json({
       success: false,
-      message: "Google login failed",
+      message:
+        "Google login failed",
     });
   }
 };
