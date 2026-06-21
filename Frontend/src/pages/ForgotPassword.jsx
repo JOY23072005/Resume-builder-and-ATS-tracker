@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthCard from "../cards/AuthCard";
+import AuthCard from "../components/cards/AuthCard";
 import AuthForm from "../components/Form";
 import AuthInput from "../components/Input";
 import AuthButton from "../components/Button";

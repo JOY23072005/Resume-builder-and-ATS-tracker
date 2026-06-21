@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import ThemeToggle from "../components/ThemeToggle";
+import { useAuth } from "../../context/AuthContext";
+import ThemeToggle from "../ThemeToggle";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -14,6 +14,9 @@ export default function Navbar() {
                 alt="Logo"
             />
           Resume Builder AI
+      </Link>
+      <Link to="/dashboard">
+        Dashboard
       </Link>
 
       <div className="flex gap-4">

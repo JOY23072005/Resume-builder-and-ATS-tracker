@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import EmailVerify from "./EmailVerify.jsx";
 import toast from "react-hot-toast";
-import AuthCard from "../cards/AuthCard.jsx";
+import AuthCard from "../components/cards/AuthCard.jsx";
 import Form from "../components/Form.jsx";
 import GoogleAuthButton from "../components/GoogleAuthButton";
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { signup,sendVerificationOtp } from "../services/auth.service.js";
 import toast from "react-hot-toast";
 import {Link,useNavigate} from "react-router-dom";
-import AuthCard from "../cards/AuthCard.jsx";
+import AuthCard from "../components/cards/AuthCard.jsx";
 import Form from "../components/Form.jsx";
 import GoogleAuthButton from "../components/GoogleAuthButton.jsx";
 

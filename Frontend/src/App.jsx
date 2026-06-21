@@ -4,14 +4,16 @@ import {
   Route,
 } from "react-router-dom";
 
-import RootLayout from "./layout/RootLayout";
+import RootLayout from "./components/layout/RootLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import ProtectedRoute from "./layout/ProtectedRoute"
+import ProtectedRoute from "./components/layout/ProtectedRoute"
 import EmailVerify from "./pages/EmailVerify";
 import ForgotPassword from "./pages/ForgotPassword";
-import PublicRoute from "./layout/PublicRoute";
+import PublicRoute from "./components/layout/PublicRoute";
+import Dashboard from "./pages/Dashboard";
+import ResumeEditor from "./pages/ResumeEditor";
 
 
 function App() {
@@ -20,14 +22,6 @@ function App() {
       <Routes>
         {/* Everything inside this Route will automatically inherit the RootLayout structure */}
         <Route element={<RootLayout />}>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/login"
             element={
@@ -61,6 +55,30 @@ function App() {
                 <EmailVerify />
               </PublicRoute>
             } />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/resume/:id"
+            element={
+              <ProtectedRoute>
+                <ResumeEditor />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
