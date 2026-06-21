@@ -7,7 +7,7 @@ export const createResume = async (
 ) => {
   try {
 
-    const userId = req.user.id;
+    const userId = req.userId;
 
     let { title } = req.body;
 
@@ -95,7 +95,7 @@ export const getAllResumes = async (
 
   try {
 
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const result =
       await pool.query(
@@ -139,7 +139,7 @@ export const getResumeById = async (
 
     const { id } = req.params;
 
-    const userId = req.user.id;
+    const userId = req.userId;
 
     const result =
       await pool.query(

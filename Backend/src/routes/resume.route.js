@@ -15,37 +15,37 @@ import { protectRoute } from "../middleware/auth.middleware.js";
 const router = express.Router();
 
 router.post(
-  "/resume",
+  "/",
   protectRoute,
   createResume
 );
 
 router.get(
-  "/resume",
+  "/",
   protectRoute,
   getAllResumes
 );
 
 router.get(
-  "/resume/:id",
+  "/:id",
   protectRoute,
   getResumeById
 );
 
 router.put(
-  "/resume/:id",
+  "/:id",
   protectRoute,
   updateResume
 );
 
 router.delete(
-  "/resume/:id",
+  "/:id",
   protectRoute,
   deleteResume
 );
 
 router.patch(
-  "/resume/:id/public",
+  "/:id/public",
   protectRoute,
   togglePublicResume
 );
