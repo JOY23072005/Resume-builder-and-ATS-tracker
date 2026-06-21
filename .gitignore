@@ -1,6 +1,6 @@
 # dependencies
 node_modules/
-
+jd.txt
 # environment variables
 .env
 .env.local
