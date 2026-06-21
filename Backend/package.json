@@ -20,7 +20,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js"
+    "dev": "node src/server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -30,6 +30,7 @@
     "google-auth-library": "^10.7.0",
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^9.0.1",
-    "pg": "^8.21.0"
+    "pg": "^8.21.0",
+    "slugify": "^1.6.9"
   }
 }

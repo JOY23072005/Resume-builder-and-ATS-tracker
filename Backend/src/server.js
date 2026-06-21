@@ -1,10 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectDB } from "./src/config/db.js";
+import { connectDB } from "./config/db.js";
 import cors from "cors";
 //router
-import AuthRouter from "./src/routes/auth.route.js";
-import UserRouter from "./src/routes/user.route.js";
+import AuthRouter from "./routes/auth.route.js";
+import UserRouter from "./routes/user.route.js";
+import ResumeRouter from "./routes/resume.route.js"
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth",AuthRouter);
 app.use("/user",UserRouter);
+app.use("/resume",ResumeRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
