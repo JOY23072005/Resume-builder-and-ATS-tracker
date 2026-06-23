@@ -2,7 +2,7 @@ export default function EducationSection({
   resumeData,
   setResumeData,
 }) {
-  const education = resumeData.education;
+  const education = resumeData.education || [];
 
   const addEducation = () => {
     setResumeData({
@@ -20,14 +20,10 @@ export default function EducationSection({
     });
   };
 
-  const updateEducation = (
-    index,
-    field,
-    value
-  ) => {
-    const updated = [...education];
-
-    updated[index][field] = value;
+  const updateEducation = (index, field, value) => {
+    const updated = education.map((edu, i) => 
+      i === index ? { ...edu, [field]: value } : edu
+    );
 
     setResumeData({
       ...resumeData,

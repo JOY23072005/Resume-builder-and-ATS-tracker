@@ -4,7 +4,7 @@ export default function ProjectSection({
 }) {
 
   const projects =
-    resumeData.projects;
+    resumeData.projects || [];
 
   const addProject = () => {
 

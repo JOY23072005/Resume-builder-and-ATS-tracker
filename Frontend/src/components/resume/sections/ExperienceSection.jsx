@@ -4,7 +4,7 @@ export default function ExperienceSection({
 }) {
 
   const experience =
-    resumeData.experience;
+    resumeData.experience || [];
 
   const addExperience = () => {
 
