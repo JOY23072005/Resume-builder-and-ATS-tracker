@@ -251,9 +251,11 @@ export const updateResume = async (
 
       projects=$4,
 
-      skills=$5
+      skills=$5,
 
-      WHERE resume_id=$6
+      achievements=$6
+
+      WHERE resume_id=$7
       `,
       [
         JSON.stringify(basics),
@@ -261,6 +263,7 @@ export const updateResume = async (
         JSON.stringify(experience),
         JSON.stringify(projects),
         JSON.stringify(skills),
+        JSON.stringify(achievements),
         id
       ]
     );
