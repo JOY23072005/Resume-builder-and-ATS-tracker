@@ -217,6 +217,7 @@ export const updateResume = async (
       experience = [],
       projects = [],
       skills = [],
+      achievements = [],
     } = req.body;
   
     await client.query(
@@ -235,11 +236,7 @@ export const updateResume = async (
       `,
       [title, id]
     );
-    console.log(
-    JSON.stringify([
-      basics,
-    ], null, 2)
-    );
+
     await client.query(
       `
       UPDATE resume_data
