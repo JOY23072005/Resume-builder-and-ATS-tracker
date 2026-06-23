@@ -154,7 +154,8 @@ export const getResumeById = async (
           rd.education,
           rd.experience,
           rd.projects,
-          rd.skills
+          rd.skills,
+          rd.achievements
 
         FROM resumes r
 

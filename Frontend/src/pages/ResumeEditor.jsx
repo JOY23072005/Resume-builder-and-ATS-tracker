@@ -15,6 +15,7 @@ import ProjectSection from "../components/resume/sections/ProjectSection";
 import SkillSection from "../components/resume/sections/SkillSection";
 
 import ResumePreview from "../components/resume/ResumePreview";
+import AchievementsSection from "../components/resume/sections/AchievementsSection";
 
 export default function ResumeEditor() {
 
@@ -85,6 +86,13 @@ export default function ResumeEditor() {
 
         {activeSection === "skills" && (
           <SkillSection
+            resumeData={resumeData}
+            setResumeData={setResumeData}
+          />
+        )}
+
+        {activeSection === "achievements" && (
+          <AchievementsSection
             resumeData={resumeData}
             setResumeData={setResumeData}
           />
