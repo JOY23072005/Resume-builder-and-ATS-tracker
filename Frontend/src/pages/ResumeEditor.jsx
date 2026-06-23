@@ -32,7 +32,6 @@ export default function ResumeEditor() {
   const loadResume = async () => {
 
     const res = await getResumeById(id,token);
-
     setResumeData(res.data.resume);
 
   };
@@ -93,8 +92,11 @@ export default function ResumeEditor() {
 
         <button
           className="mt-6 bg-primary text-white px-4 py-2 rounded-xl"
-          onClick={() =>
+          onClick={() =>{
+            
+            // console.log(JSON.stringify(resumeData, null, 2));
             updateResume(id, resumeData)
+            }
           }
         >
           Save Resume

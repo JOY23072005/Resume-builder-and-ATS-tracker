@@ -3,7 +3,7 @@ export default function BasicsSection({
   setResumeData,
 }) {
 
-  const basics = resumeData.basics;
+  const basics = resumeData.basics || {};
 
   const updateField = (
     field,

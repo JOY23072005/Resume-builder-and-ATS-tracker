@@ -204,19 +204,21 @@ export const updateResume = async (
   const client =
     await pool.connect();
 
+  // console.log(req.body);
+  
   try {
 
     const { id } = req.params;
 
     const {
       title,
-      basics,
-      education,
-      experience,
-      projects,
-      skills,
+      basics = {},
+      education = [],
+      experience = [],
+      projects = [],
+      skills = [],
     } = req.body;
-
+  
     await client.query(
       "BEGIN"
     );
@@ -233,7 +235,11 @@ export const updateResume = async (
       `,
       [title, id]
     );
-
+    console.log(
+    JSON.stringify([
+      basics,
+    ], null, 2)
+    );
     await client.query(
       `
       UPDATE resume_data
@@ -253,12 +259,12 @@ export const updateResume = async (
       WHERE resume_id=$6
       `,
       [
-        basics,
-        education,
-        experience,
-        projects,
-        skills,
-        id,
+        JSON.stringify(basics),
+        JSON.stringify(education),
+        JSON.stringify(experience),
+        JSON.stringify(projects),
+        JSON.stringify(skills),
+        id
       ]
     );
 
