@@ -66,7 +66,7 @@ export default function Sidebar({
         }`}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-5 border-b border-zinc-700">
+        <div className="flex justify-between items-center p-5 border-b">
           <h2 className="font-bold text-lg">
             Resume Builder
           </h2>
