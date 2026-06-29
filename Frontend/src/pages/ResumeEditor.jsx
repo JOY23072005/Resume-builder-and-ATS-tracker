@@ -41,7 +41,7 @@ export default function ResumeEditor() {
     return <h1>Loading...</h1>;
 
   return (
-    <div className="grid grid-cols-12 gap-6 p-6">
+    <div className="grid grid-cols-4 md:grid-cols-12 gap-6 p-6">
 
       {/* Sidebar */}
       <div className="col-span-2">
