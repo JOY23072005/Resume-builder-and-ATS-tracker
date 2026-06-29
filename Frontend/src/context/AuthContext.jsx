@@ -5,29 +5,33 @@ import {
   useState,
 } from "react";
 
-import { getMe } from "../services/auth.service.js";
+import { getMe,logoutme } from "../services/auth.service.js";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
-  const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) {
-      getMe(token)
-        .then((res) => {
-          setUser(res.data.user);
-        })
-        .catch(() => {
-          localStorage.removeItem("token");
-        });
-    }
-  }, []);
+    const fetchUser = async () => {
+      try {
+        const res = await getMe();
+        setUser(res.data.user);
+      } catch (err) {
+        // User is simply not logged in
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchUser();
+  }, []);
+  
   const logout = () => {
-    localStorage.removeItem("token");
+    logoutme();
     setUser(null);
   };
 

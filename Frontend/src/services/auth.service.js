@@ -124,19 +124,29 @@ export const resetPassword = async (
   }
 };
 
-export const getMe = async (token) => {
+export const logoutme = async () =>{
   try {
-    const res = await api.get(
-      "/user/me",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const res = await api.post(
+      "/auth/logout",
     );
 
     return res;
   } catch (error) {
+    handleError(error);
+  }
+}
+
+export const getMe = async () => {
+  try {
+    const res = await api.get(
+      "/user/me",
+    );
+
+    return res;
+  } catch (error) {
+    if (error.response?.status === 401) {
+      return null; // expected
+    }
     handleError(error);
   }
 };

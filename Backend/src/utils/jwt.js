@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
-export const generateToken = (userId) => {
-  return jwt.sign(
+export const generateToken = (userId,res) => {
+  const token = jwt.sign(
     {
       userId,
     },
@@ -10,6 +10,17 @@ export const generateToken = (userId) => {
       expiresIn: "7d",
     }
   );
+  res.cookie('jwt',token,{
+    maxAge:7*24*60*60*1000,
+    httpOnly:true,
+    secure:process.env.NODE_ENV==='production',
+    sameSite:
+    process.env.NODE_ENV === "production"
+      ? "none"
+      : "lax",
+    }
+  )
+  return token;
 };
 
 export const verifyToken = (token) => {

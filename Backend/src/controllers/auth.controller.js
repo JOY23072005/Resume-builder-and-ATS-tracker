@@ -243,12 +243,12 @@ export const login = async (req, res) => {
       });
     }
 
-    const token = generateToken(user.id);
+    generateToken(user.id,res);
 
     return res.status(200).json({
       success: true,
       message: "Login successful",
-      token,
+      // token,
       user: {
         id: user.id,
         name: user.name,
@@ -529,13 +529,14 @@ export const googleLogin = async (
       user = result.rows[0];
     }
 
-    const token = generateToken(
-      user.id
+    generateToken(
+      user.id,
+      res
     );
 
     return res.json({
       success: true,
-      token,
+      // token,
       user,
     });
   } catch (error) {
@@ -547,4 +548,17 @@ export const googleLogin = async (
         "Google login failed",
     });
   }
+};
+
+export const logout = (req, res) => {
+    res.clearCookie("jwt", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+    });
+
+    return res.status(200).json({
+        success: true,
+        message: "Logout successful",
+    });
 };
