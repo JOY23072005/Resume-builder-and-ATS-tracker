@@ -86,7 +86,7 @@ export default function BasicsSection({
       />
 
       <textarea
-        className="border p-3 w-full rounded-xl"
+        className="border p-3 w-full rounded-xl overflow-hidden"
         rows="5"
         placeholder="Summary"
         value={basics.summary || ""}
