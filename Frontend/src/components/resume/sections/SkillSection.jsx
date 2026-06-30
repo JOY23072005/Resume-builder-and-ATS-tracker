@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { useState } from "react";
 
 export default function SkillSection({
@@ -25,6 +26,12 @@ export default function SkillSection({
 
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      addSkill()
+    }
+  };
+
   const removeSkill = (
     index
   ) => {
@@ -50,11 +57,16 @@ export default function SkillSection({
           className="border p-2 rounded flex-1"
           value={skill}
           placeholder="React"
-          onChange={(e) =>
+          onKeyDown={handleKeyDown}
+          onChange={(e) =>{
+            if(e.target.value.at(-1)===','){
+              return addSkill()
+            }
             setSkill(
               e.target.value
             )
-          }
+            }
+            }
         />
 
         <button
@@ -77,14 +89,14 @@ export default function SkillSection({
               {skill}
 
               <button
-                className="ml-2"
+                className="ml-2 hover:cursor-pointer"
                 onClick={() =>
                   removeSkill(
                     index
                   )
                 }
               >
-                ×
+                <X size={12}/>
               </button>
 
             </div>

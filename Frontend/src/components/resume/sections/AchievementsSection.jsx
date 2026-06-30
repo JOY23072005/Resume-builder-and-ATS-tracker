@@ -12,7 +12,6 @@ export default function AchievementsSection({
         ...achievements,
         {
           title: "",
-          description: "",
         },
       ],
     });
@@ -60,25 +59,11 @@ export default function AchievementsSection({
             }
           />
 
-          <textarea
-            className="border p-2 w-full rounded"
-            rows="2"
-            placeholder="Describe your achievement or core impact metrics..."
-            value={ach.description}
-            onChange={(e) =>
-              updateAchievement(
-                index,
-                "description",
-                e.target.value
-              )
-            }
-          />
-
           <button
-            className="text-red-500 text-sm hover:underline block pt-1"
+            className="text-red-500 rounded-md p-2 hover:bg-red-500/10 block pt-1"
             onClick={() => removeAchievement(index)}
           >
-            Remove Achievement
+            Remove
           </button>
         </div>
       ))}

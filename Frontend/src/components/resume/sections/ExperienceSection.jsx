@@ -17,7 +17,7 @@ export default function ExperienceSection({
         {
           company: "",
           position: "",
-          description: "",
+          points: [""],
           startDate: "",
           endDate: "",
         },
@@ -63,6 +63,56 @@ export default function ExperienceSection({
 
   };
 
+  const addPoint = (expIndex) => {
+
+    const updated = [...experience];
+
+    updated[expIndex].points.push("");
+
+    setResumeData({
+      ...resumeData,
+      experience: updated,
+    });
+
+  };
+
+  const updatePoint = (
+    expIndex,
+    pointIndex,
+    value
+  ) => {
+
+    const updated = [...experience];
+
+    updated[expIndex].points[pointIndex] =
+      value;
+
+    setResumeData({
+      ...resumeData,
+      experience: updated,
+    });
+
+  };
+
+  const removePoint = (
+    expIndex,
+    pointIndex
+  ) => {
+
+    const updated = [...experience];
+
+    updated[expIndex].points =
+      updated[expIndex].points.filter(
+        (_, i) => i !== pointIndex
+      );
+
+    setResumeData({
+      ...resumeData,
+      experience: updated,
+    });
+
+  };
+
   return (
     <div className="space-y-6">
 
@@ -97,25 +147,56 @@ export default function ExperienceSection({
                 )
               }
             />
+            <div className="space-y-2">
 
-            <textarea
-              className="border p-2 w-full rounded"
-              rows="4"
-              placeholder="Description"
-              value={
-                exp.description
-              }
-              onChange={(e) =>
-                updateExperience(
-                  index,
-                  "description",
-                  e.target.value
-                )
-              }
-            />
+              {exp.points.map((point, pointIndex) => (
 
+                <div
+                  key={pointIndex}
+                  className="flex gap-2"
+                >
+
+                  <input
+                    className="border p-2 w-full rounded"
+                    placeholder={`Point ${pointIndex + 1}`}
+                    value={point}
+                    onChange={(e) =>
+                      updatePoint(
+                        index,
+                        pointIndex,
+                        e.target.value
+                      )
+                    }
+                  />
+
+                  <button
+                    type="button"
+                    className="text-red-500"
+                    onClick={() =>
+                      removePoint(
+                        index,
+                        pointIndex
+                      )
+                    }
+                  >
+                    ✕
+                  </button>
+
+                </div>
+
+              ))}
+
+              <button
+                type="button"
+                className="text-primary px-4 py-2 rounded-xl hover:bg-primary/10"
+                onClick={() => addPoint(index)}
+              >
+                + Add Point
+              </button>
+
+            </div>
             <button
-              className="text-red-500"
+              className="text-red-500 rounded-md p-2 hover:bg-red-500/10 block pt-1"
               onClick={() =>
                 removeExperience(
                   index

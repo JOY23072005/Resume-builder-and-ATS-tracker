@@ -46,9 +46,15 @@ export default function ClassicTemplate({
                 <p className="text-sm opacity-70">
                   {exp.company}
                 </p>
-                <p className="mt-1">
-                  {exp.description}
-                </p>
+                <ul className="list-disc pl-5 space-y-2">
+                  {exp.points.map((point, index) => (
+                    <li key={index} className="text-sm text-foreground">
+                      <strong className="font-semibold">
+                        {point}
+                      </strong>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -70,9 +76,15 @@ export default function ClassicTemplate({
                 <p className="text-sm text-primary">
                   {project.techStack}
                 </p>
-                <p className="mt-1">
-                  {project.description}
-                </p>
+                <ul className="list-disc pl-5 space-y-2">
+                  {project.points.map((point, index) => (
+                    <li key={index} className="text-sm text-foreground">
+                      <strong className="font-semibold">
+                        {point}
+                      </strong>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -110,7 +122,6 @@ export default function ClassicTemplate({
                 <strong className="font-semibold">
                   {ach.title}
                 </strong>
-                {ach.description && `: ${ach.description}`}
               </li>
             ))}
           </ul>

@@ -1,3 +1,5 @@
+import { X } from "lucide-react";
+
 export default function ProjectSection({
   resumeData,
   setResumeData,
@@ -16,7 +18,7 @@ export default function ProjectSection({
 
         {
           title: "",
-          description: "",
+          points: [""],
           techStack: "",
         },
       ],
@@ -44,6 +46,64 @@ export default function ProjectSection({
     });
 
   };
+
+  const removeProject = (
+    projectIdx
+  )=>{
+    const updated = projects.filter((project,i)=>i!=projectIdx)
+
+    setResumeData({
+      ...resumeData,
+      projects: updated,
+    })
+  }
+
+  const addPoint = (
+    projectIdx,
+  )=>{
+    const updated = [
+      ...projects
+    ]
+    updated[projectIdx].points.push("");
+    setResumeData({
+      ...resumeData,
+      projects:updated,
+    })
+  }
+
+  const updatePoint = (
+    projectIdx,
+    pointIdx,
+    value
+  ) => {
+
+    const updated = [...projects];
+
+    updated[projectIdx].points[pointIdx] =
+      value;
+
+    setResumeData({
+      ...resumeData,
+      projects: updated,
+    });
+
+  };
+
+  const removePoint = (
+    projectIdx,
+    pointIdx
+  )=>{
+    const updated = [...projects];
+    updated[projectIdx].points =
+      updated[projectIdx].points.filter(
+        (_, i) => i !== pointIdx
+      );
+
+    setResumeData({
+      ...resumeData,
+      projects:updated,
+    })
+  }
 
   return (
     <div className="space-y-6">
@@ -84,23 +144,41 @@ export default function ProjectSection({
                 )
               }
             />
-
-            <textarea
-              className="border p-2 w-full rounded"
-              rows="4"
-              placeholder="Description"
-              value={
-                project.description
-              }
-              onChange={(e) =>
-                updateProject(
-                  index,
-                  "description",
-                  e.target.value
-                )
-              }
-            />
-
+            <div className="space-y-2">
+            {project.points.map((point,idx)=>(
+              <div key={idx} className="flex gap-2">
+                <input
+                  placeholder="Point"
+                  type="text"
+                  className="border p-2 w-full rounded"
+                  value={point}
+                  onChange={(e) =>
+                    updatePoint(
+                      index,
+                      idx,
+                      e.target.value
+                    )
+                  }
+                />
+                <button onClick={()=>removePoint(index,idx)}>
+                  <X size={20} className="text-red-500 hover:cursor-pointer hover:bg-red-500/10"/>
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              className="text-primary px-4 py-2 rounded-xl hover:bg-primary/10"
+              onClick={()=>addPoint(index)}
+            >
+              + Add Point
+            </button>
+            </div>
+            <button
+              type="button"
+              onClick={()=>removeProject(index)} 
+              className="text-red-500 rounded-md p-2 hover:bg-red-500/10 block pt-1">
+              Remove
+            </button>
           </div>
         )
       )}
