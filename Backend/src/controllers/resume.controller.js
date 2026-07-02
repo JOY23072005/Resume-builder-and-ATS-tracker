@@ -1,5 +1,6 @@
 import { pool } from "../config/db.js";
 import slugify from "slugify";
+import { addPdfJob } from "../jobs/pdf.jobs.js";
 
 export const createResume = async (
   req,
@@ -438,3 +439,22 @@ export const togglePublicResume =
 
     }
   };
+
+  export const exportResume = async (
+  req,
+  res
+) => {
+
+  const { id } = req.params;
+
+  const job = await addPdfJob(
+    id,
+    req.userId
+  );
+
+  return res.json({
+    success: true,
+    jobId: job.id,
+  });
+
+};

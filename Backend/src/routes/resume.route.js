@@ -8,6 +8,7 @@ import {
   deleteResume,
   togglePublicResume,
   getPublicResume,
+  exportResume,
 } from "../controllers/resume.controller.js";
 
 import { protectRoute } from "../middleware/auth.middleware.js";
@@ -53,6 +54,12 @@ router.patch(
 router.get(
   "/r/:slug",
   getPublicResume
+);
+
+router.post(
+  "/:id/export",
+  protectRoute,
+  exportResume
 );
 
 export default router;
