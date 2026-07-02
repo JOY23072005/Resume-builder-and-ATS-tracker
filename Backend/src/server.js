@@ -9,6 +9,7 @@ import "./config/redis.js"; //integrating redis for load balancing
 import AuthRouter from "./routes/auth.route.js";
 import UserRouter from "./routes/user.route.js";
 import ResumeRouter from "./routes/resume.route.js"
+import JobRouter from "./routes/jobs.route.js";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 app.use("/auth",AuthRouter);
 app.use("/user",UserRouter);
 app.use("/resume",ResumeRouter);
+app.use("/job",JobRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);

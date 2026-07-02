@@ -9,6 +9,7 @@ import {
   getPublicResume,
   exportResume,
   getResumeByIdController,
+  downloadPdf,
 } from "../controllers/resume.controller.js";
 
 import { protectRoute } from "../middleware/auth.middleware.js";
@@ -60,6 +61,12 @@ router.post(
   "/:id/export",
   protectRoute,
   exportResume
+);
+
+router.get(
+  "/download/:fileId",
+  protectRoute,
+  downloadPdf
 );
 
 export default router;

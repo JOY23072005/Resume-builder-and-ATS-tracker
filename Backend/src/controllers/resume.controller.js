@@ -2,6 +2,8 @@ import { pool } from "../config/db.js";
 import slugify from "slugify";
 import { addPdfJob } from "../jobs/pdf.jobs.js";
 import { getResumeById } from "../services/resume.service.js";
+import fs from "fs";
+import path from "path";
 
 export const createResume = async (
   req,
@@ -431,4 +433,93 @@ export const togglePublicResume =
   } catch(err){
     console.error("Export Controller Error:",err);
   }
+};
+
+export const downloadPdf = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const { fileId } =
+      req.params;
+
+    const filePath =
+      path.join(
+        process.cwd(),
+        "generated",
+        "pdfs",
+        fileId
+      );
+
+    if (
+      !fs.existsSync(filePath)
+    ) {
+
+      return res.status(404).json({
+        success: false,
+        message:
+          "PDF not found",
+      });
+
+    }
+
+    res.download(
+      filePath,
+
+      fileId,
+
+      (err) => {
+
+        if (err) {
+
+          console.error(
+            "Download Error:",
+            err
+          );
+
+          return;
+
+        }
+
+        fs.unlink(
+          filePath,
+
+          (unlinkErr) => {
+
+            if (unlinkErr) {
+
+              console.error(
+                "Delete Error:",
+                unlinkErr
+              );
+
+            } else {
+
+              console.log(
+                `${fileId} deleted`
+              );
+
+            }
+
+          }
+        );
+
+      }
+
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message:
+        "Failed to download PDF",
+    });
+
+  }
+
 };

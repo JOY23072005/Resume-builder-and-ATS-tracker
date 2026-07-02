@@ -4,7 +4,7 @@ import { generatePdf } from "../services/pdf.service.js";
 import { getResumeById } from "../services/resume.service.js";
 import { classicTemplate } from "../templates/classic.template.js";
 import { modernTemplate } from "../templates/modern.template.js";
-
+import path from "path";
 
 const worker = new Worker(
 
@@ -42,10 +42,11 @@ const worker = new Worker(
 
         const pdfPath = await generatePdf({html,fileName : resume.id});
 
-        console.log(pdfPath);
+        // console.log(pdfPath);
 
         return {
         success: true,
+        fileId: path.basename(pdfPath)
         };
 
   },
