@@ -1,3 +1,5 @@
+import { X } from "lucide-react";
+
 export default function ExperienceSection({
   resumeData,
   setResumeData,
@@ -171,7 +173,6 @@ export default function ExperienceSection({
 
                   <button
                     type="button"
-                    className="text-red-500"
                     onClick={() =>
                       removePoint(
                         index,
@@ -179,7 +180,7 @@ export default function ExperienceSection({
                       )
                     }
                   >
-                    ✕
+                    <X size={20} className="text-red-500 hover:bg-red-500/10"/>
                   </button>
 
                 </div>

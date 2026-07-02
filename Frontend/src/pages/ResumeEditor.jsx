@@ -41,10 +41,10 @@ export default function ResumeEditor() {
     return <h1>Loading...</h1>;
 
   return (
-    <div className="grid grid-cols-4 lg:grid-cols-12 gap-6 p-6">
+    <div className="grid grid-cols-12 gap-6 p-6">
 
       {/* Sidebar */}
-      <div className="col-span-2">
+      <div className="col-span-12 md:col-span-6 lg:col-span-2">
         <ResumeSidebar
           activeSection={activeSection}
           setActiveSection={setActiveSection}
@@ -52,7 +52,7 @@ export default function ResumeEditor() {
       </div>
 
       {/* Form */}
-      <div className="col-span-4">
+      <div className="col-span-12 md:col-span-6 lg:col-span-4">
 
         {activeSection === "basics" && (
           <BasicsSection
@@ -111,14 +111,11 @@ export default function ResumeEditor() {
       </div>
 
       {/* Preview */}
-      <div className="col-span-6">
-
+      <div className="col-span-12 lg:col-span-6">
         <ResumePreview
           data={resumeData}
         />
-
       </div>
-
     </div>
   );
 }
