@@ -1,6 +1,7 @@
 import { pool } from "../config/db.js";
 import slugify from "slugify";
 import { addPdfJob } from "../jobs/pdf.jobs.js";
+import { getResumeById } from "../services/resume.service.js";
 
 export const createResume = async (
   req,
@@ -131,58 +132,29 @@ export const getAllResumes = async (
   }
 };
 
-export const getResumeById = async (
+export const getResumeByIdController = async (
   req,
   res
 ) => {
 
   try {
 
-    const { id } = req.params;
+    const resume =
+    await getResumeById(
+      req.params.id,
+      req.userId
+    );
 
-    const userId = req.userId;
-
-    const result =
-      await pool.query(
-        `
-        SELECT
-
-          r.id,
-          r.title,
-          r.template,
-
-          rd.basics,
-          rd.education,
-          rd.experience,
-          rd.projects,
-          rd.skills,
-          rd.achievements
-
-        FROM resumes r
-
-        JOIN resume_data rd
-
-        ON r.id=rd.resume_id
-
-        WHERE r.id=$1
-        AND r.user_id=$2
-        `,
-        [id, userId]
-      );
-
-    if (!result.rows.length) {
-
+    if (!resume) {
       return res.status(404).json({
         success: false,
-        message:
-          "Resume not found",
+        message: "Resume not found",
       });
-
     }
-
+    // console.log(resume);
     return res.json({
       success: true,
-      resume: result.rows[0],
+      resume,
     });
 
   } catch (error) {
@@ -444,17 +416,19 @@ export const togglePublicResume =
   req,
   res
 ) => {
+  try{
+    const { id } = req.params;
 
-  const { id } = req.params;
+    const job = await addPdfJob(
+      id,
+      req.userId
+    );
 
-  const job = await addPdfJob(
-    id,
-    req.userId
-  );
-
-  return res.json({
-    success: true,
-    jobId: job.id,
-  });
-
+    return res.json({
+      success: true,
+      jobId: job.id,
+    });
+  } catch(err){
+    console.error("Export Controller Error:",err);
+  }
 };

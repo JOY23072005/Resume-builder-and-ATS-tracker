@@ -230,6 +230,14 @@ export const login = async (req, res) => {
         });
     }
 
+    if(!user.password_hash){
+      return res.status(403).json({
+            success: false,
+            message:
+            "Please login via google OAUTH",
+        });
+    }
+
     const isPasswordValid =
       await bcrypt.compare(
         password,

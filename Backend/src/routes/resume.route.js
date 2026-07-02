@@ -3,12 +3,12 @@ import express from "express";
 import {
   createResume,
   getAllResumes,
-  getResumeById,
   updateResume,
   deleteResume,
   togglePublicResume,
   getPublicResume,
   exportResume,
+  getResumeByIdController,
 } from "../controllers/resume.controller.js";
 
 import { protectRoute } from "../middleware/auth.middleware.js";
@@ -30,7 +30,7 @@ router.get(
 router.get(
   "/:id",
   protectRoute,
-  getResumeById
+  getResumeByIdController
 );
 
 router.put(

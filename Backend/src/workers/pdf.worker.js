@@ -1,5 +1,10 @@
 import { Worker } from "bullmq";
 import { redisWorker } from "../config/redis.js";
+import { generatePdf } from "../services/pdf.service.js";
+import { getResumeById } from "../services/resume.service.js";
+import { classicTemplate } from "../templates/classic.template.js";
+import { modernTemplate } from "../templates/modern.template.js";
+
 
 const worker = new Worker(
 
@@ -7,21 +12,46 @@ const worker = new Worker(
 
   async (job) => {
 
-    console.log(
-      "Processing Job:",
-      job.id
-    );
+        console.log(
+        "Processing Job:",
+        job.id
+        );
 
-    console.log(job.data);
+        console.log("fetching resume...");
 
-    // Later:
-    // Fetch Resume
-    // Generate HTML
-    // Puppeteer PDF
+        const resume = await getResumeById(
+                            job.data.resumeId,
+                            job.data.userId
+                        );
 
-    return {
-      success: true,
-    };
+        // console.log(resume);
+        let html;
+
+        switch (resume.template) {
+            case "classic":
+                html = classicTemplate(resume);
+                break;
+
+            case "modern":
+                html = modernTemplate(resume);
+                break;
+
+            default:
+                html = classicTemplate(resume);
+        }
+
+        const pdfPath = await generatePdf({html,fileName : resume.id});
+
+        console.log(pdfPath);
+
+        // Later:
+        // Fetch Resume (DONE)
+        // Generate HTML
+        // Puppeteer PDF (DONE)
+
+        return {
+        success: true,
+        };
 
   },
 
