@@ -44,11 +44,6 @@ const worker = new Worker(
 
         console.log(pdfPath);
 
-        // Later:
-        // Fetch Resume (DONE)
-        // Generate HTML
-        // Puppeteer PDF (DONE)
-
         return {
         success: true,
         };
