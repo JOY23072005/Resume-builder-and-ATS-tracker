@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import "./config/redis.js"; //integrating redis for load balancing
+
 //router
 import AuthRouter from "./routes/auth.route.js";
 import UserRouter from "./routes/user.route.js";
