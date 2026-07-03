@@ -130,6 +130,18 @@ worker.on(
   }
 );
 
+process.on("SIGINT", async () => {
+    await closeBrowser();
+    process.exit(0);
+});
+
+process.on("SIGTERM", async () => {
+    await closeBrowser();
+    process.exit(0);
+});
+
+console.log("PDF Worker Started");
+
 console.log(
   "PDF Worker Started"
 );

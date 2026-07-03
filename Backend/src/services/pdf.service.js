@@ -1,22 +1,16 @@
 import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
+import { getBrowser } from "./browser.service.js";
 
 export const generatePdf = async ({
     html,
     fileName
 })=>{
 
-    const browser = await puppeteer.launch({
-        headless: true,
-        args: [
-            "--no-sandbox",
-            "--disable-setuid-sandbox",
-        ],
-    });
+    const browser = await getBrowser();
 
-    const page =
-        await browser.newPage();
+    const page = await browser.newPage();
 
     await page.setContent(html, {
         waitUntil: "networkidle0",
@@ -61,7 +55,7 @@ export const generatePdf = async ({
         preferCSSPageSize: true,
     });
 
-    await browser.close();
+    await page.close();
 
     return pdfPath;
 
