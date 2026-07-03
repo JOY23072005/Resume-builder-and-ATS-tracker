@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import {
   getResumeById,
   updateResume,
+  exportToPdf,
 } from "../services/resume.service";
 
 import ResumeSidebar from "../components/resume/ResumeSidebar";
@@ -22,7 +23,12 @@ export default function ResumeEditor() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const [resumeData, setResumeData] = useState(null);
-
+  const [exportState, setExportState] =useState(
+  {
+    loading: false,
+    jobId: null,
+  });
+  
   const [activeSection, setActiveSection] =
     useState("basics");
 
@@ -30,10 +36,26 @@ export default function ResumeEditor() {
     loadResume();
   }, []);
 
+  useEffect(() => {
+
+    console.log(jobId);
+
+  }, [jobId]);
+
   const loadResume = async () => {
 
     const res = await getResumeById(id,token);
     setResumeData(res.data.resume);
+
+  };
+
+  const handleExport = async () => {
+
+    const res = await exportToPdf(id);
+
+    if (!res) return;
+
+    setJobId(res.data.jobId);
 
   };
 
@@ -107,7 +129,12 @@ export default function ResumeEditor() {
         >
           Save Resume
         </button>
-
+        <button
+          className="mt-6 ml-4 bg-primary text-white px-4 py-2 rounded-xl"
+          onClick={handleExport}
+        >
+          Export To PDF
+        </button>
       </div>
 
       {/* Preview */}

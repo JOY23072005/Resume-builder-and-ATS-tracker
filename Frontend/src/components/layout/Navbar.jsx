@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isOpen,setIsOpen] = useState(false);
   return (
     <>
-    <nav className="flex justify-between items-center backdrop-blur-xs p-4 border-b">
+    <nav className="fixed top-0 w-full flex justify-between items-center backdrop-blur-xs p-4 border-b">
       <div className="flex gap-4">
         <Menu onClick={()=>setIsOpen(true)} className="hover:cursor-pointer"/>
         <Link className="flex gap-2  items-center" to="/">

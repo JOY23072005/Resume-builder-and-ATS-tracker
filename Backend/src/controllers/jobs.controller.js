@@ -25,15 +25,18 @@ export const getJobStatus = async (
     const result =
         job.returnvalue;
 
+    const progress = job.progress || {
+        progress: 0,
+        message: "Waiting..."
+    };
+
     res.json({
-
-        success:true,
-
+        success: true,
         state,
-
+        progress,
         result,
-
     });
+    
     } catch(err){
         res.status(500).json({message:"Internal server error"});
         console.error('getJobStatus Error :',err);

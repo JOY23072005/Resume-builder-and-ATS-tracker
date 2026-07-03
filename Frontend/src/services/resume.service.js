@@ -65,3 +65,15 @@ export const deleteResume = async (id) => {
     handleError(error);
   }
 };
+
+export const exportToPdf = async (id) => {
+  try {
+    const res = await api.post(`/resume/${id}/export`);
+
+    toast.success("Resume export in progress");
+
+    return res;
+  } catch (error) {
+    handleError(error);
+  }
+}
