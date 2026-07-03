@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 
 import { AuthProvider } from "./context/AuthContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { LoadingProvider } from "./context/LoadingContext";
 
 ReactDOM.createRoot(
   document.getElementById("root")
@@ -16,8 +17,10 @@ ReactDOM.createRoot(
     clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
   >
     <AuthProvider>
-      <Toaster position="top-right" />
-      <App />
+      <LoadingProvider>
+        <Toaster position="top-right" />
+        <App />
+      </LoadingProvider>
     </AuthProvider>
   </GoogleOAuthProvider>
 );

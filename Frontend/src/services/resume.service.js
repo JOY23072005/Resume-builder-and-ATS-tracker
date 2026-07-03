@@ -77,3 +77,24 @@ export const exportToPdf = async (id) => {
     handleError(error);
   }
 }
+
+export const downloadPdf = async (fileId) => {
+  const response = await api.get(
+    `/resume/download/${fileId}`,
+    {
+      responseType: "blob",
+    }
+  );
+
+  const url = window.URL.createObjectURL(response.data);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+
+  link.download = "resume.pdf";
+
+  link.click();
+
+  window.URL.revokeObjectURL(url);
+};

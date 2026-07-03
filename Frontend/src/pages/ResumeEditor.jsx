@@ -17,30 +17,21 @@ import SkillSection from "../components/resume/sections/SkillSection";
 
 import ResumePreview from "../components/resume/ResumePreview";
 import AchievementsSection from "../components/resume/sections/AchievementsSection";
+import useJobPolling from "../hooks/useJobPolling";
 
 export default function ResumeEditor() {
 
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const [resumeData, setResumeData] = useState(null);
-  const [exportState, setExportState] =useState(
-  {
-    loading: false,
-    jobId: null,
-  });
-  
+  const { startPolling } = useJobPolling();
+
   const [activeSection, setActiveSection] =
     useState("basics");
 
   useEffect(() => {
     loadResume();
   }, []);
-
-  useEffect(() => {
-
-    console.log(jobId);
-
-  }, [jobId]);
 
   const loadResume = async () => {
 
@@ -55,7 +46,7 @@ export default function ResumeEditor() {
 
     if (!res) return;
 
-    setJobId(res.data.jobId);
+    startPolling(res.data.jobId);
 
   };
 
