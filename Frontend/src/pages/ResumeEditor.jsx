@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 
 import {
@@ -24,14 +24,43 @@ export default function ResumeEditor() {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const [resumeData, setResumeData] = useState(null);
+  const [saved,setSaved] = useState("");
   const { startPolling } = useJobPolling();
 
-  const [activeSection, setActiveSection] =
-    useState("basics");
+  const [activeSection, setActiveSection] = useState("basics");
 
+  const firstLoad = useRef(true);
+  
   useEffect(() => {
     loadResume();
   }, []);
+
+  useEffect(() => {
+
+    if (!resumeData)
+      return;
+
+    if (firstLoad.current) {
+
+      firstLoad.current = false;
+
+      return;
+
+    }
+
+    setSaved("Saving...");
+
+    const timer = setTimeout(async () => {
+
+      await updateResume(id, resumeData);
+
+      setSaved("Saved");
+
+    }, 2000);
+
+    return () => clearTimeout(timer);
+
+  }, [resumeData]);
 
   const loadResume = async () => {
 
@@ -108,24 +137,28 @@ export default function ResumeEditor() {
             setResumeData={setResumeData}
           />
         )}
-
-        <button
-          className="mt-6 bg-primary text-white px-4 py-2 rounded-xl"
-          onClick={() =>{
-            
-            // console.log(JSON.stringify(resumeData, null, 2));
-            updateResume(id, resumeData)
+        <div className="mt-6 w-full ">
+          <button
+            className=" bg-primary text-white px-4 py-2 rounded-xl"
+            onClick={() =>{
+              
+              // console.log(JSON.stringify(resumeData, null, 2));
+              updateResume(id, resumeData)
+              }
             }
-          }
-        >
-          Save Resume
-        </button>
-        <button
-          className="mt-6 ml-4 bg-primary text-white px-4 py-2 rounded-xl"
-          onClick={handleExport}
-        >
-          Export To PDF
-        </button>
+          >
+            Save Resume
+          </button>
+          <button
+            className="ml-4 bg-primary text-white px-4 py-2 rounded-xl"
+            onClick={handleExport}
+          >
+            Export To PDF
+          </button>
+          <span className="ml-5">
+            {saved}
+          </span>
+        </div>
       </div>
 
       {/* Preview */}

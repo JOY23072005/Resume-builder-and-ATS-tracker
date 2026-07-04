@@ -46,7 +46,7 @@ export const updateResume = async (id, data) => {
   try {
     const res = await api.put(`/resume/${id}`, data);
 
-    toast.success("Resume updated successfully");
+    // toast.success("Resume updated successfully");
 
     return res;
   } catch (error) {
