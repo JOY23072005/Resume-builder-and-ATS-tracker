@@ -96,7 +96,7 @@ export default function Sidebar({
         {user &&
         <div className="fixed bottom-0 border-t flex p-3">
             {user.avatar_url?
-                <img src={user.avatar_url} className="rounded-full border w-10" alt="Profile avatar"/>
+                <img src={user.avatar_url} className="rounded-full border max-h-8" alt="avatar"/>
                 : 
                 <User className="text-white bg-gray rounded-full border"/>
               }

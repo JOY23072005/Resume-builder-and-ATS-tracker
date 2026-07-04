@@ -7,17 +7,15 @@ export const getBrowser = async () => {
   if (browser)
     return browser;
 
-  browser = await puppeteer.launch({
-
+  const browser = await puppeteer.launch({
     headless: true,
-
     args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-gpu",
+        "--headless=new",
+        "--disable-gpu",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-background-networking",
     ],
-
   });
 
   console.log("Browser Launched");

@@ -26,10 +26,10 @@ export default function Navbar() {
           <div className="flex gap-4">
             {user ? (
               <>
-                <div className="h-5 w-8">
-                  <Link to="/profile">
+                <div>
+                  <Link to="/profile" >
                     {user.avatar_url ? (
-                      <img src={user.avatar_url} className="rounded-full border" alt="Profile avatar" />
+                      <img src={user.avatar_url} className="rounded-full border max-h-8" alt="avatar" />
                     ) : (
                       <User className="text-white bg-gray rounded-full border" />
                     )}
