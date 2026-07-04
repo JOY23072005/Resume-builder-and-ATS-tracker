@@ -49,10 +49,10 @@ export const modernTemplate = (data = {}) => {
   .summary { margin: 0; }
   .layout {
     display: grid;
-    grid-template-columns: 190px 1fr;
+    grid-template-columns: 200px 1fr;
   }
   aside {
-    padding: 20px 24px 30px 42px;
+    padding: 20px 24px 30px 32px;
     background: #f5f7fb;
   }
   main { padding: 20px 42px 30px 28px; }
@@ -65,7 +65,7 @@ export const modernTemplate = (data = {}) => {
     margin: 0 0 8px 0;
   }
   aside h2 { font-size: 10pt; }
-  .contact { font-size: 9.5pt; color: var(--muted); }
+  .contact { font-size: 9.5pt; color: var(--muted); overflow-wrap: anywhere; word-break: break-word;}
   .contact a { color: var(--muted); text-decoration: none; }
   aside .contact { display: flex; flex-direction: column; gap: 4px; }
   aside .divider { display: none; }

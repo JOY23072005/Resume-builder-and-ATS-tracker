@@ -14,6 +14,7 @@ import EducationSection from "../components/resume/sections/EducationSection";
 import ExperienceSection from "../components/resume/sections/ExperienceSection";
 import ProjectSection from "../components/resume/sections/ProjectSection";
 import SkillSection from "../components/resume/sections/SkillSection";
+import TemplateSelector from "../components/resume/TemplateSelector";
 
 import ResumePreview from "../components/resume/ResumePreview";
 import AchievementsSection from "../components/resume/sections/AchievementsSection";
@@ -95,6 +96,11 @@ export default function ResumeEditor() {
 
       {/* Form */}
       <div className="col-span-12 md:col-span-6 lg:col-span-4">
+
+        <TemplateSelector
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+        />
 
         {activeSection === "basics" && (
           <BasicsSection

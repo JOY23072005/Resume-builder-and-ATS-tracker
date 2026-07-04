@@ -7,7 +7,7 @@ export const getBrowser = async () => {
   if (browser)
     return browser;
 
-  const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
     headless: true,
     args: [
         "--headless=new",

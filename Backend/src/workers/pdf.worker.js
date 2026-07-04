@@ -5,6 +5,7 @@ import { getResumeById } from "../services/resume.service.js";
 import { classicTemplate } from "../templates/classic.template.js";
 import { modernTemplate } from "../templates/modern.template.js";
 import path from "path";
+import { closeBrowser } from "../services/browser.service.js";
 
 const updateProgress = async (
     job,

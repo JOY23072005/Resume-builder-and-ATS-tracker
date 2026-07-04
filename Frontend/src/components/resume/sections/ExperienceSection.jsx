@@ -117,7 +117,6 @@ export default function ExperienceSection({
 
   return (
     <div className="space-y-6">
-
       {experience.map(
         (exp, index) => (
           <div

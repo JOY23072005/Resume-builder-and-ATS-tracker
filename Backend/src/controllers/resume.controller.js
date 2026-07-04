@@ -188,6 +188,7 @@ export const updateResume = async (
 
     const {
       title,
+      template,
       basics = {},
       education = [],
       experience = [],
@@ -206,11 +207,12 @@ export const updateResume = async (
 
       SET
         title=$1,
+        template=$2,
         updated_at=NOW()
 
-      WHERE id=$2
+      WHERE id=$3
       `,
-      [title, id]
+      [title,template, id]
     );
 
     await client.query(
