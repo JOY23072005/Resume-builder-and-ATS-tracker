@@ -91,6 +91,8 @@ export default function ResumeEditor() {
         <ResumeSidebar
           activeSection={activeSection}
           setActiveSection={setActiveSection}
+          resumeData={resumeData}
+          setResumeData={setResumeData}
         />
       </div>
 

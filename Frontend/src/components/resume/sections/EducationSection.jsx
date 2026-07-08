@@ -10,18 +10,16 @@ function SortableEducationCard({
   updateEducation,
   removeEducation,
 }) {
-  const { ref, handleRef, styles, isDragging } = useSortable({ id, index });
+  const { ref, handleRef, isDragging } = useSortable({ id, index });
 
   return (
     <div
       ref={ref}
-      style={{
-        ...styles,
-        zIndex: isDragging ? 10 : 1, 
-      }}
-      className="border rounded-xl p-4 space-y-3 relative bg-card text-foreground"
+      style={{ zIndex: isDragging ? 10 : 1 }}
+      className={`border rounded-xl p-4 space-y-3 relative bg-card text-foreground ${
+        isDragging ? "opacity-60 shadow-xl" : ""
+      }`}
     >
-      {/* Drag Handle Bar */}
       <div className="flex items-center gap-2 border-b pb-2 mb-2">
         <div
           ref={handleRef}
@@ -48,12 +46,39 @@ function SortableEducationCard({
         onChange={(e) => updateEducation(index, "degree", e.target.value)}
       />
 
-      <input
-        className="border p-2 w-full rounded"
-        placeholder="CGPA"
-        value={edu.cgpa || ""}
-        onChange={(e) => updateEducation(index, "cgpa", e.target.value)}
-      />
+      <div className="grid grid-cols-2 gap-3">
+
+        <select
+          className="border p-2 rounded"
+          value={edu.scoreType || "CGPA"}
+          onChange={(e) =>
+            updateEducation(
+              index,
+              "scoreType",
+              e.target.value
+            )
+          }
+        >
+          <option className="bg-background text-foreground" value="CGPA">CGPA</option>
+          <option className="bg-background text-foreground" value="Percentage">Percentage</option>
+          <option className="bg-background text-foreground" value="GPA">GPA</option>
+          <option className="bg-background text-foreground" value="CPI">CPI</option>
+        </select>
+
+        <input
+          className="border p-2 rounded"
+          placeholder="Score"
+          value={edu.score || ""}
+          onChange={(e) =>
+            updateEducation(
+              index,
+              "score",
+              e.target.value
+            )
+          }
+        />
+
+      </div>
 
       <button
         type="button"
@@ -66,13 +91,10 @@ function SortableEducationCard({
   );
 }
 
-
 export default function EducationSection({ resumeData, setResumeData }) {
-  
-  const education = (resumeData.education || []).map((edu, index) => ({
-    ...edu,
-    id: edu.id || `edu-${index}-${edu.college || "item"}-${Date.now()}`,
-  }));
+  // Backfill missing ids ONCE into real state, instead of regenerating
+  // a new id every render. Do this as a normalize-on-write, not on-read.
+  const education = resumeData.education || [];
 
   const handleDragEnd = ({ canceled, operation }) => {
     if (canceled) return;
@@ -80,63 +102,65 @@ export default function EducationSection({ resumeData, setResumeData }) {
     const { source } = operation;
     if (!isSortable(source)) return;
 
-    const { initialIndex, index: newIndex } = source.sortable;
-    if (initialIndex === newIndex) return;
+    const { initialIndex, index } = source;
+    if (initialIndex === index) return;
 
-    const updatedList = [...education];
-    const [movedItem] = updatedList.splice(initialIndex, 1);
-    updatedList.splice(newIndex, 0, movedItem);
-
-    setResumeData({
-      ...resumeData,
-      education: updatedList,
+    setResumeData((prev) => {
+      const current = prev.education || [];
+      const updated = [...current];
+      const [moved] = updated.splice(initialIndex, 1);
+      updated.splice(index, 0, moved);
+      return { ...prev, education: updated };
     });
   };
 
   const addEducation = () => {
-    setResumeData({
-      ...resumeData,
+    setResumeData((prev) => ({
+      ...prev,
       education: [
-        ...education,
+        ...(prev.education || []),
         {
-          
-          id: crypto.randomUUID(), 
+          id: crypto.randomUUID(),
           college: "",
           degree: "",
-          cgpa: "",
+          scoreType: "CGPA",
+          score: "",
           startDate: "",
           endDate: "",
         },
       ],
-    });
+    }));
   };
 
   const updateEducation = (index, field, value) => {
-    const updated = education.map((edu, i) =>
-      i === index ? { ...edu, [field]: value } : edu
-    );
-
-    setResumeData({
-      ...resumeData,
-      education: updated,
+    setResumeData((prev) => {
+      const current = prev.education || [];
+      return {
+        ...prev,
+        education: current.map((edu, i) =>
+          i === index ? { ...edu, [field]: value } : edu
+        ),
+      };
     });
   };
 
   const removeEducation = (index) => {
-    setResumeData({
-      ...resumeData,
-      education: education.filter((_, i) => i !== index),
+    setResumeData((prev) => {
+      const current = prev.education || [];
+      return {
+        ...prev,
+        education: current.filter((_, i) => i !== index),
+      };
     });
   };
 
   return (
     <div className="space-y-6">
-      {/* Wrap list in the Provider */}
       <DragDropProvider onDragEnd={handleDragEnd}>
         <div className="space-y-4">
           {education.map((edu, index) => (
             <SortableEducationCard
-              key={edu.id} 
+              key={edu.id}
               id={edu.id}
               edu={edu}
               index={index}
