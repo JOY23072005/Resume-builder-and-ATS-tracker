@@ -17,7 +17,56 @@ export const classicTemplate = (data = {}) => {
     projects = [],
     skills = [],
     achievements = [],
+    sectionOrder = [
+      {
+        "id": "experience",
+        "visible": true
+      },
+      {
+        "id": "projects",
+        "visible": false
+      },
+      {
+        "id": "education",
+        "visible": true
+      },
+      {
+        "id" : "skills",
+        "visible": true
+      },
+      {
+        "id" : "achievements",
+        "visible": true
+      },
+    ],
   } = data;
+
+  const sectionMap = {
+    experience: renderSection(
+      "Experience",
+      renderExperience(experience)
+    ),
+
+    projects: renderSection(
+      "Projects",
+      renderProjects(projects)
+    ),
+
+    education: renderSection(
+      "Education",
+      renderEducation(education)
+    ),
+
+    skills: renderSection(
+      "Skills",
+      renderSkills(skills, "inline")
+    ),
+
+    achievements: renderSection(
+      "Achievements",
+      renderAchievements(achievements)
+    ),
+  };
 
   return `
 <!DOCTYPE html>
@@ -33,7 +82,7 @@ export const classicTemplate = (data = {}) => {
     font-size: 11pt;
     line-height: 1.45;
     margin: 0;
-    padding: 36px 42px;
+    padding: 20px 24px;
   }
   h1 {
     font-size: 22pt;
@@ -79,11 +128,10 @@ export const classicTemplate = (data = {}) => {
 
   ${basics.summary ? `<p class="summary">${escapeHtml(basics.summary)}</p>` : ""}
 
-  ${renderSection("Experience", renderExperience(experience))}
-  ${renderSection("Projects", renderProjects(projects))}
-  ${renderSection("Education", renderEducation(education))}
-  ${renderSection("Skills", renderSkills(skills, "inline"))}
-  ${renderSection("Achievements", renderAchievements(achievements))}
+  ${sectionOrder
+  .filter((section) => section.visible)
+  .map((section) => sectionMap[section.id] || "")
+  .join("")}
 
 </body>
 </html>
