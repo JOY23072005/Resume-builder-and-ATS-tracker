@@ -135,9 +135,24 @@ export default function ClassicTemplate({ data }) {
           {basics.email}
           {basics.phone && ` • ${basics.phone}`}
         </p>
-        <p className="text-sm">
-          {basics.linkedin}
-          {basics.github && ` • ${basics.github}`}
+        <p className="text-sm flex flex-wrap gap-2">
+          {(basics.links || []).map((link, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <span>•</span>}
+              <a
+                href={
+                  /^https?:\/\//i.test(link.url)
+                    ? link.url
+                    : `https://${link.url}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                {link.label}
+              </a>
+            </React.Fragment>
+          ))}
         </p>
       </div>
 

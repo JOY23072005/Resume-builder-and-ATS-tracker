@@ -11,18 +11,20 @@ export const renderContactLinks = (basics = {}) => {
   }
 
   if (basics.phone) {
-    items.push(escapeHtml(basics.phone));
+    items.push(
+      `<a href="tel:${escapeHtml(basics.phone)}">${escapeHtml(basics.phone)}</a>`
+    );
   }
 
-  if (basics.linkedin) {
-    const { label, href } = parseLink(basics.linkedin);
-    items.push(`<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`);
-  }
+  (basics.links || []).forEach((link) => {
+    if (!link.url) return;
 
-  if (basics.github) {
-    const { label, href } = parseLink(basics.github);
-    items.push(`<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`);
-  }
+    items.push(
+      `<a href="${escapeHtml(parseLink(link.url))}">
+        ${escapeHtml(link.label)}
+      </a>`
+    );
+  });
 
   return items.join(`<span class="divider"> | </span>`);
 };
