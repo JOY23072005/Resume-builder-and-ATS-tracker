@@ -40,7 +40,7 @@ export const classicTemplate = (data = {}) => {
       },
     ],
   } = data;
-  console.log(data.section_order);
+  // console.log(data.section_order);
 
   const sectionMap = {
     experience: renderSection(
@@ -76,14 +76,17 @@ export const classicTemplate = (data = {}) => {
 <meta charset="UTF-8" />
 <title>${escapeHtml(basics.name || "Resume")}</title>
 <style>
+  @page {
+    size: A4;
+    margin: 8mm 10mm;
+  }
   * { box-sizing: border-box; }
   body {
-    font-family: "Georgia", "Times New Roman", serif;
+    font-family: Calibri, Arial, Helvetica, sans-serif;
     color: #1a1a1a;
-    font-size: 11pt;
-    line-height: 1.45;
+    font-size:10pt;
+    line-height: 1.22;
     margin: 0;
-    padding: 20px 24px;
   }
   h1 {
     font-size: 22pt;
@@ -91,23 +94,30 @@ export const classicTemplate = (data = {}) => {
     letter-spacing: 0.5px;
   }
   .contact {
-    font-size: 10pt;
+    font-size: 9pt;
     color: #333;
-    margin-bottom: 14px;
+    margin-bottom: 5px;
   }
   .contact a { color: #333; text-decoration: none; }
   .divider { color: #999; }
-  .summary { margin: 0 0 14px 0; }
-  section { margin-bottom: 14px; }
+  .summary { margin: 0 0 6px 0; }
+  section { 
+    margin-bottom: 8px; 
+    page-break-inside: avoid;
+  }
   h2 {
     font-size: 12.5pt;
     text-transform: uppercase;
     letter-spacing: 1px;
     border-bottom: 1px solid #1a1a1a;
-    padding-bottom: 2px;
-    margin: 0 0 8px 0;
+    padding-bottom: 1px;
+    margin: 0 0 4px 0;
   }
-  .entry { margin-bottom: 10px; }
+  .entry { 
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 4px;
+  }
   .entry-header {
     display: flex;
     justify-content: space-between;
@@ -116,9 +126,9 @@ export const classicTemplate = (data = {}) => {
   }
   .entry-title { font-weight: bold; }
   .entry-date { font-size: 10pt; color: #444; white-space: nowrap; }
-  .entry-sub { margin: 2px 0 4px 0; font-style: italic; font-size: 10pt; color: #333; }
-  ul { margin: 4px 0 0 18px; padding: 0; }
-  li { margin-bottom: 2px; }
+  .entry-sub { margin: 0 0 2px 0; font-style: italic; font-size: 10pt; color: #333; }
+  ul { margin: 1px 0 0 15px; padding: 0; }
+  li { margin-bottom: 0; }
   .skills-line { margin: 0; }
 </style>
 </head>

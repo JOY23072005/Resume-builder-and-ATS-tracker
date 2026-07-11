@@ -43,7 +43,7 @@ export const renderEducation = (education = []) => {
                 : ""
             }
           </div>
-          ${edu.cgpa ? `<p class="entry-sub">CGPA: ${escapeHtml(edu.cgpa)}</p>` : ""}
+          ${edu.scoreType && edu.score ? `<p class="entry-sub">${edu.scoreType}: ${escapeHtml(edu.score)}</p>` : ""}
         </div>
       `
     )
