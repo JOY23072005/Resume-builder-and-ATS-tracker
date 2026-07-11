@@ -8,9 +8,11 @@ import {
   renderProjects,
   renderAchievements,
 } from "./helpers/renderEntries.js";
+import { layoutPresets } from "./layoutPresets.js";
 
 export const classicTemplate = (data = {}) => {
   const {
+    density = "comfortable",
     basics = {},
     education = [],
     experience = [],
@@ -41,6 +43,10 @@ export const classicTemplate = (data = {}) => {
     ],
   } = data;
   // console.log(data.section_order);
+
+  const layout =
+  layoutPresets[density] ??
+  layoutPresets.comfortable;
 
   const sectionMap = {
     experience: renderSection(
@@ -76,60 +82,203 @@ export const classicTemplate = (data = {}) => {
 <meta charset="UTF-8" />
 <title>${escapeHtml(basics.name || "Resume")}</title>
 <style>
-  @page {
-    size: A4;
-    margin: 8mm 10mm;
+
+  @page{
+    size:A4;
+    margin:
+      ${layout.pageMargin.top}
+      ${layout.pageMargin.right}
+      ${layout.pageMargin.bottom}
+      ${layout.pageMargin.left};
   }
-  * { box-sizing: border-box; }
-  body {
-    font-family: Calibri, Arial, Helvetica, sans-serif;
-    color: #1a1a1a;
-    font-size:10pt;
-    line-height: 1.22;
-    margin: 0;
+
+  :root{
+
+    --accent:${layout.accentColor};
+    --text:${layout.textColor};
+    --muted:${layout.mutedColor};
+    --divider:${layout.dividerColor};
+    --link:${layout.linkColor};
+    --bg:${layout.backgroundColor};
+
   }
-  h1 {
-    font-size: 22pt;
-    margin: 0 0 4px 0;
-    letter-spacing: 0.5px;
+
+  *{
+    box-sizing:border-box;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
   }
-  .contact {
-    font-size: 9pt;
-    color: #333;
-    margin-bottom: 5px;
+
+  body{
+
+    margin:0;
+
+    padding:${layout.bodyPadding};
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:${layout.fontFamily};
+
+    font-size:${layout.fontSize};
+
+    line-height:${layout.lineHeight};
+
   }
-  .contact a { color: #333; text-decoration: none; }
-  .divider { color: #999; }
-  .summary { margin: 0 0 6px 0; }
-  section { 
-    margin-bottom: 8px; 
-    page-break-inside: avoid;
+
+  h1{
+
+    margin:0 0 4px 0;
+
+    font-size:${layout.nameSize};
+
+    letter-spacing:0.5px;
+
   }
-  h2 {
-    font-size: 12.5pt;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid #1a1a1a;
-    padding-bottom: 1px;
-    margin: 0 0 4px 0;
+
+  .contact{
+
+    margin-bottom:5px;
+
+    font-size:${layout.contactSize};
+
+    color:var(--link);
+
   }
-  .entry { 
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 4px;
+
+  .contact a{
+
+    color:var(--link);
+
+    text-decoration:none;
+
   }
-  .entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
+
+  .divider{
+
+    color:var(--divider);
+
   }
-  .entry-title { font-weight: bold; }
-  .entry-date { font-size: 10pt; color: #444; white-space: nowrap; }
-  .entry-sub { margin: 0 0 2px 0; font-style: italic; font-size: 10pt; color: #333; }
-  ul { margin: 1px 0 0 15px; padding: 0; }
-  li { margin-bottom: 0; }
-  .skills-line { margin: 0; }
+
+  .summary{
+
+    margin:0 0 ${layout.summaryGap} 0;
+
+  }
+
+  section{
+
+    margin-bottom:${layout.sectionGap};
+
+    page-break-inside:avoid;
+
+    break-inside:avoid;
+
+  }
+
+  h2{
+
+    margin:0 0 ${layout.headingGap} 0;
+
+    padding-bottom:1px;
+
+    font-size:${layout.headingSize};
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    color:var(--accent);
+
+    border-bottom:1px solid var(--accent);
+
+    page-break-after:avoid;
+
+  }
+
+  .entry{
+
+    margin-bottom:${layout.entryGap};
+
+    page-break-inside:avoid;
+
+    break-inside:avoid;
+
+  }
+
+  .entry-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:baseline;
+
+    gap:12px;
+
+  }
+
+  .entry-title{
+
+    font-weight:bold;
+
+  }
+
+  .entry-date{
+
+    white-space:nowrap;
+
+    font-size:${layout.secondaryTextSize};
+
+    color:var(--muted);
+
+  }
+
+  .entry-sub{
+
+    margin:0 0 2px 0;
+
+    font-style:italic;
+
+    font-size:${layout.secondaryTextSize};
+
+    color:var(--muted);
+
+  }
+
+  p{
+
+    margin:0;
+
+  }
+
+  ul{
+
+    margin:${layout.listMargin};
+
+    padding:0;
+
+  }
+
+  li{
+
+    margin-bottom:${layout.bulletGap};
+
+  }
+
+  .skills-line{
+
+    margin:0;
+
+  }
+
+  a{
+
+    text-decoration:none;
+
+  }
+
 </style>
 </head>
 <body>

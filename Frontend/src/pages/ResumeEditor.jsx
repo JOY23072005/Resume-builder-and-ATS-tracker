@@ -14,11 +14,11 @@ import EducationSection from "../components/resume/sections/EducationSection";
 import ExperienceSection from "../components/resume/sections/ExperienceSection";
 import ProjectSection from "../components/resume/sections/ProjectSection";
 import SkillSection from "../components/resume/sections/SkillSection";
-import TemplateSelector from "../components/resume/TemplateSelector";
 
 import ResumePreview from "../components/resume/ResumePreview";
 import AchievementsSection from "../components/resume/sections/AchievementsSection";
 import useJobPolling from "../hooks/useJobPolling";
+import ResumeSettings from "../components/resume/ResumeSettings";
 
 export default function ResumeEditor() {
 
@@ -99,11 +99,6 @@ export default function ResumeEditor() {
       {/* Form */}
       <div className="col-span-12 md:col-span-6 lg:col-span-4">
 
-        <TemplateSelector
-          resumeData={resumeData}
-          setResumeData={setResumeData}
-        />
-
         {activeSection === "basics" && (
           <BasicsSection
             resumeData={resumeData}
@@ -145,28 +140,13 @@ export default function ResumeEditor() {
             setResumeData={setResumeData}
           />
         )}
-        <div className="mt-6 w-full ">
-          <button
-            className=" bg-primary text-white px-4 py-2 rounded-xl"
-            onClick={() =>{
-              
-              // console.log(JSON.stringify(resumeData, null, 2));
-              updateResume(id, resumeData)
-              }
-            }
-          >
-            Save Resume
-          </button>
-          <button
-            className="ml-4 bg-primary text-white px-4 py-2 rounded-xl"
-            onClick={handleExport}
-          >
-            Export To PDF
-          </button>
-          <span className="ml-5">
-            {saved}
-          </span>
-        </div>
+        <ResumeSettings
+          resumeData={resumeData}
+          setResumeData={setResumeData}
+          onExport={handleExport}
+          onSave={() => updateResume(id, resumeData)}
+          saved={saved}
+        />
       </div>
 
       {/* Preview */}

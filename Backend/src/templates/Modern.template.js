@@ -8,114 +8,404 @@ import {
   renderProjects,
   renderAchievements,
 } from "./helpers/renderEntries.js";
+import { layoutPresets } from "./layoutPresets.js";
 
 export const modernTemplate = (data = {}) => {
+
   const {
+    density = "comfortable",
     basics = {},
     education = [],
     experience = [],
     projects = [],
     skills = [],
     achievements = [],
+    section_order = [
+      { id: "experience", visible: true },
+      { id: "projects", visible: true },
+      { id: "education", visible: true },
+      { id: "skills", visible: true },
+      { id: "achievements", visible: true },
+    ],
   } = data;
+
+  const layout =
+    layoutPresets[density] ??
+    layoutPresets.comfortable;
+
+  const asideMap = {
+
+    skills: renderSection(
+      "Skills",
+      renderSkills(skills, "chips")
+    ),
+
+    education: renderSection(
+      "Education",
+      renderEducation(education)
+    ),
+
+  };
+
+  const mainMap = {
+
+    experience: renderSection(
+      "Experience",
+      renderExperience(experience)
+    ),
+
+    projects: renderSection(
+      "Projects",
+      renderProjects(projects)
+    ),
+
+    achievements: renderSection(
+      "Achievements",
+      renderAchievements(achievements)
+    ),
+
+  };
 
   return `
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
+
+<meta charset="UTF-8"/>
+
 <title>${escapeHtml(basics.name || "Resume")}</title>
+
 <style>
-  :root {
-    --accent: #2563eb;
-    --text: #1f2430;
-    --muted: #5b6472;
+
+  @page{
+
+    size:A4;
+
+    margin:
+      ${layout.pageMargin.top}
+      ${layout.pageMargin.right}
+      ${layout.pageMargin.bottom}
+      ${layout.pageMargin.left};
+
   }
-  * { box-sizing: border-box; }
-  body {
-    font-family: "Calibri", "Arial", "Helvetica Neue", sans-serif;
-    color: var(--text);
-    font-size: 10.5pt;
-    line-height: 1.45;
-    margin: 0;
-    padding: 0;
+
+  :root{
+
+    --accent:${layout.accentColor};
+    --text:${layout.textColor};
+    --muted:${layout.mutedColor};
+    --bg:${layout.backgroundColor};
+    --link:${layout.linkColor};
+    --border:${layout.borderColor};
+
   }
-  .header {
-    padding: 20px 24px;
-    border-bottom: 3px solid var(--accent);
+
+  *{
+
+    box-sizing:border-box;
+
+    -webkit-print-color-adjust:exact;
+
+    print-color-adjust:exact;
+
   }
-  h1 { font-size: 24pt; margin: 0 0 4px 0; color: var(--text); }
-  .role { font-size: 11pt; color: var(--accent); font-weight: 600; margin: 0 0 8px 0; }
-  .summary { margin: 0; }
-  .layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
+
+  body{
+
+    margin:0;
+
+    padding:${layout.bodyPadding};
+
+    font-family:${layout.fontFamily};
+
+    font-size:${layout.fontSize};
+
+    line-height:${layout.lineHeight};
+
+    color:var(--text);
+
+    background:var(--bg);
+
   }
-  aside {
-    padding: 20px 24px 30px 32px;
-    background: #f5f7fb;
+
+  .header{
+
+    padding:18px 24px;
+
+    border-bottom:3px solid var(--accent);
+
   }
-  main { padding: 20px 42px 30px 28px; }
-  section { margin-bottom: 16px; }
-  h2 {
-    font-size: 11pt;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--accent);
-    margin: 0 0 8px 0;
+
+  h1{
+
+    margin:0 0 4px;
+
+    font-size:${layout.nameSize};
+
   }
-  aside h2 { font-size: 10pt; }
-  .contact { font-size: 9.5pt; color: var(--muted); overflow-wrap: anywhere; word-break: break-word;}
-  .contact a { color: var(--muted); text-decoration: none; }
-  aside .contact { display: flex; flex-direction: column; gap: 4px; }
-  aside .divider { display: none; }
-  .entry { margin-bottom: 12px; }
-  .entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 10px;
+
+  .role{
+
+    margin:0 0 6px;
+
+    color:var(--accent);
+
+    font-size:${layout.headingSize};
+
+    font-weight:600;
+
   }
-  .entry-title { font-weight: 700; }
-  .entry-date { font-size: 9pt; color: var(--muted); white-space: nowrap; }
-  .entry-sub { margin: 2px 0 4px 0; font-style: italic; font-size: 9.5pt; color: var(--muted); }
-  ul { margin: 4px 0 0 16px; padding: 0; }
-  li { margin-bottom: 3px; }
-  .skills-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chip {
-    background: #fff;
-    border: 1px solid #dbe1ea;
-    border-radius: 4px;
-    padding: 3px 8px;
-    font-size: 9pt;
-    color: var(--text);
+
+  .summary{
+
+    margin:0;
+
   }
+
+  .layout{
+
+    display:grid;
+
+    grid-template-columns:220px 1fr;
+
+  }
+
+  aside{
+
+    background:#f5f7fb;
+
+    padding:18px 20px;
+
+  }
+
+  main{
+
+    padding:18px 24px;
+
+  }
+
+  section{
+
+    margin-bottom:${layout.sectionGap};
+
+    page-break-inside:avoid;
+
+    break-inside:avoid;
+
+  }
+
+  h2{
+
+    margin:0 0 ${layout.headingGap};
+
+    font-size:${layout.headingSize};
+
+    color:var(--accent);
+
+    text-transform:uppercase;
+
+    letter-spacing:.6px;
+
+  }
+
+  aside h2{
+
+    font-size:${layout.contactSize};
+
+  }
+
+  .contact{
+
+    font-size:${layout.contactSize};
+
+    color:var(--muted);
+
+    overflow-wrap:anywhere;
+
+    word-break:break-word;
+
+  }
+
+  .contact a{
+
+    color:var(--muted);
+
+    text-decoration:none;
+
+  }
+
+  aside .contact{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+  }
+
+  aside .divider{
+
+    display:none;
+
+  }
+
+  .entry{
+
+    margin-bottom:${layout.entryGap};
+
+    page-break-inside:avoid;
+
+    break-inside:avoid;
+
+  }
+
+  .entry-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:baseline;
+
+    gap:12px;
+
+  }
+
+  .entry-title{
+
+    font-weight:700;
+
+  }
+
+  .entry-date{
+
+    font-size:${layout.dateSize};
+
+    color:var(--muted);
+
+    white-space:nowrap;
+
+  }
+
+  .entry-sub{
+
+    margin:0 0 2px;
+
+    font-style:italic;
+
+    font-size:${layout.dateSize};
+
+    color:var(--muted);
+
+  }
+
+  ul{
+
+    margin:${layout.listMargin};
+
+    padding:0;
+
+  }
+
+  li{
+
+    margin-bottom:${layout.bulletGap};
+
+  }
+
+  .skills-chips{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:6px;
+
+  }
+
+  .chip{
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:4px;
+
+    padding:3px 8px;
+
+    font-size:${layout.contactSize};
+
+    color:var(--text);
+
+  }
+
 </style>
+
 </head>
+
 <body>
 
   <div class="header">
+
     <h1>${escapeHtml(basics.name)}</h1>
-    ${experience[0]?.position ? `<p class="role">${escapeHtml(experience[0].position)}</p>` : ""}
-    ${basics.summary ? `<p class="summary">${escapeHtml(basics.summary)}</p>` : ""}
+
+    ${experience[0]?.position
+    ? `<p class="role">${escapeHtml(experience[0].position)}</p>`
+    : ""}
+
+    ${basics.summary
+    ? `<p class="summary">${escapeHtml(basics.summary)}</p>`
+    : ""}
+
   </div>
 
   <div class="layout">
+
     <aside>
-      ${renderSection("Contact", `<div class="contact">${renderContactLinks(basics)}</div>`)}
-      ${renderSection("Skills", renderSkills(skills, "chips"))}
-      ${renderSection("Education", renderEducation(education))}
+
+    ${renderSection(
+      "Contact",
+      `<div class="contact">${renderContactLinks(basics)}</div>`
+    )}
+
+    ${section_order
+      .filter(
+        s =>
+          s.visible &&
+          asideMap[s.id]
+      )
+      .map(
+        s => asideMap[s.id]
+      )
+      .join("")}
+
     </aside>
+
     <main>
-      ${renderSection("Experience", renderExperience(experience))}
-      ${renderSection("Projects", renderProjects(projects))}
-      ${renderSection("Achievements", renderAchievements(achievements))}
+
+    ${section_order
+      .filter(
+        s =>
+          s.visible &&
+          mainMap[s.id]
+      )
+      .map(
+        s => mainMap[s.id]
+      )
+      .join("")}
+
     </main>
+
   </div>
 
 </body>
+
 </html>
-  `;
+
+`;
+
 };
 
 export default modernTemplate;

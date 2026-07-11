@@ -17,6 +17,7 @@ export const getResumeById = async (
       r.id,
       r.title,
       r.template,
+      r.density,
 
       rd.basics,
       rd.education,
