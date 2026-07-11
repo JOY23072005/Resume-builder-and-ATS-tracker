@@ -24,7 +24,7 @@ export const getResumeById = async (
       rd.projects,
       rd.skills,
       rd.achievements,
-      rd.section_order,
+      rd.section_order
 
     FROM resumes r
 

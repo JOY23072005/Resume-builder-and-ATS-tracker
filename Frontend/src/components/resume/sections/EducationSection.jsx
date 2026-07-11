@@ -48,6 +48,48 @@ function SortableEducationCard({
 
       <div className="grid grid-cols-2 gap-3">
 
+        <div>
+          <label className="text-sm text-muted-foreground block mb-1">
+            Start Date
+          </label>
+
+          <input
+            type="month"
+            className="border p-2 rounded w-full"
+            value={edu.startDate || ""}
+            onChange={(e) =>
+              updateEducation(
+                index,
+                "startDate",
+                e.target.value
+              )
+            }
+          />
+        </div>
+
+        <div>
+          <label className="text-sm text-muted-foreground block mb-1">
+            End Date
+          </label>
+
+          <input
+            type="month"
+            className="border p-2 rounded w-full"
+            value={edu.endDate || ""}
+            onChange={(e) =>
+              updateEducation(
+                index,
+                "endDate",
+                e.target.value
+              )
+            }
+          />
+        </div>
+
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+
         <select
           className="border p-2 rounded"
           value={edu.scoreType || "CGPA"}
