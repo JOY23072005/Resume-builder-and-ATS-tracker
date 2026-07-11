@@ -97,6 +97,7 @@ export default function ResumeSidebar({
       updated.splice(index, 0, moved);
       return { ...prev, section_order: updated };
     });
+    console.log("sorted");
   };
 
   const toggleVisibility = (id) => {

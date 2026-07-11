@@ -195,6 +195,7 @@ export const updateResume = async (
       projects = [],
       skills = [],
       achievements = [],
+      section_order = [],
     } = req.body;
   
     await client.query(
@@ -231,9 +232,12 @@ export const updateResume = async (
 
       skills=$5,
 
-      achievements=$6
+      achievements=$6,
 
-      WHERE resume_id=$7
+      section_order=$7
+
+
+      WHERE resume_id=$8
       `,
       [
         JSON.stringify(basics),
@@ -242,6 +246,7 @@ export const updateResume = async (
         JSON.stringify(projects),
         JSON.stringify(skills),
         JSON.stringify(achievements),
+        JSON.stringify(section_order),
         id
       ]
     );

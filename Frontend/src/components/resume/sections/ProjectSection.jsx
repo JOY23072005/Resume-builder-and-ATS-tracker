@@ -3,12 +3,21 @@ import { DragDropProvider } from "@dnd-kit/react";
 import { useSortableSection } from "../../../hooks/useSortableSection";
 import SortableCardShell from "../../SortableCardShell";
 import PointsList from "../../PointsList";
+import DateRangePicker from "../../DateRangePicker";
 
 export default function ProjectSection({ resumeData, setResumeData }) {
   const { items: projects, handleDragEnd, addItem, updateItem, removeItem, addPoint, updatePoint, removePoint } =
     useSortableSection(resumeData, setResumeData, "projects", "proj");
 
-  const addProject = () => addItem({ id: crypto.randomUUID(), title: "", points: [""], techStack: "" });
+  const addProject = () =>
+  addItem({
+    id: crypto.randomUUID(),
+    title: "",
+    techStack: "",
+    startDate: "",
+    endDate: "",
+    points: [""],
+  });
 
   return (
     <div className="space-y-6">
@@ -28,6 +37,19 @@ export default function ProjectSection({ resumeData, setResumeData }) {
                 value={project.techStack || ""}
                 onChange={(e) => updateItem(index, "techStack", e.target.value)}
               />
+              
+              <DateRangePicker
+                startDate={project.startDate}
+                endDate={project.endDate}
+                currentLabel="Ongoing Project"
+                onStartDateChange={(value)=>
+                    updateItem(index,"startDate",value)
+                }
+                onEndDateChange={(value)=>
+                    updateItem(index,"endDate",value)
+                }
+              />
+              
               <PointsList points={project.points} itemIndex={index} updatePoint={updatePoint} removePoint={removePoint} addPoint={addPoint} />
               <button
                 type="button"

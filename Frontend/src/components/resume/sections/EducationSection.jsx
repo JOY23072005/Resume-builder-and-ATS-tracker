@@ -2,6 +2,7 @@ import React from "react";
 import { DragDropProvider } from "@dnd-kit/react";
 import { useSortable, isSortable } from "@dnd-kit/react/sortable";
 import { GripVertical } from "lucide-react";
+import DateRangePicker from "../../DateRangePicker";
 
 function SortableEducationCard({
   id,
@@ -46,47 +47,17 @@ function SortableEducationCard({
         onChange={(e) => updateEducation(index, "degree", e.target.value)}
       />
 
-      <div className="grid grid-cols-2 gap-3">
-
-        <div>
-          <label className="text-sm text-muted-foreground block mb-1">
-            Start Date
-          </label>
-
-          <input
-            type="month"
-            className="border p-2 rounded w-full"
-            value={edu.startDate || ""}
-            onChange={(e) =>
-              updateEducation(
-                index,
-                "startDate",
-                e.target.value
-              )
-            }
-          />
-        </div>
-
-        <div>
-          <label className="text-sm text-muted-foreground block mb-1">
-            End Date
-          </label>
-
-          <input
-            type="month"
-            className="border p-2 rounded w-full"
-            value={edu.endDate || ""}
-            onChange={(e) =>
-              updateEducation(
-                index,
-                "endDate",
-                e.target.value
-              )
-            }
-          />
-        </div>
-
-      </div>
+      <DateRangePicker
+        startDate={edu.startDate}
+        endDate={edu.endDate}
+        currentLabel="Currently Studying"
+        onStartDateChange={(value)=>
+            updateEducation(index,"startDate",value)
+        }
+        onEndDateChange={(value)=>
+            updateEducation(index,"endDate",value)
+        }
+      />
 
       <div className="grid grid-cols-2 gap-3">
 

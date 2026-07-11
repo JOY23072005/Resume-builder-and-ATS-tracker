@@ -41,7 +41,7 @@ export const modernTemplate = (data = {}) => {
     padding: 0;
   }
   .header {
-    padding: 30px 42px 18px 42px;
+    padding: 20px 24px;
     border-bottom: 3px solid var(--accent);
   }
   h1 { font-size: 24pt; margin: 0 0 4px 0; color: var(--text); }
@@ -49,7 +49,7 @@ export const modernTemplate = (data = {}) => {
   .summary { margin: 0; }
   .layout {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 220px 1fr;
   }
   aside {
     padding: 20px 24px 30px 32px;

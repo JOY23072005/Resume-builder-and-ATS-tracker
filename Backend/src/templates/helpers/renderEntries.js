@@ -15,7 +15,7 @@ export const renderExperience = (experience = []) => {
             }</span>
             ${
               exp.startDate || exp.endDate
-                ? `<span class="entry-date">${formatDate(exp.startDate)} - ${formatDate(exp.endDate)}</span>`
+                ? `<span class="entry-date">${formatDate(exp.startDate)} - ${exp.endDate ? formatDate(exp.endDate) : "Present"}</span>`
                 : ""
             }
           </div>
@@ -39,7 +39,7 @@ export const renderEducation = (education = []) => {
             }</span>
             ${
               edu.startDate || edu.endDate
-                ? `<span class="entry-date">${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}</span>`
+                ? `<span class="entry-date">${formatDate(edu.startDate)} - ${edu.endDate?formatDate(edu.endDate) : "Present"}</span>`
                 : ""
             }
           </div>
@@ -59,6 +59,11 @@ export const renderProjects = (projects = []) => {
         <div class="entry">
           <div class="entry-header">
             <span class="entry-title">${escapeHtml(proj.title)}</span>
+            ${
+              proj.startDate || proj.endDate
+                ? `<span class="entry-date">${formatDate(proj.startDate)} - ${proj.endDate?formatDate(proj.endDate) : "Present"}</span>`
+                : ""
+            }
           </div>
           ${proj.techStack ? `<p class="entry-sub">${escapeHtml(proj.techStack)}</p>` : ""}
           ${renderBulletPoints(proj.points)}

@@ -3,6 +3,7 @@ import { DragDropProvider } from "@dnd-kit/react";
 import { useSortableSection } from "../../../hooks/useSortableSection";
 import SortableCardShell from "../../SortableCardShell";
 import PointsList from "../../PointsList";
+import DateRangePicker from "../../DateRangePicker";
 
 export default function ExperienceSection({ resumeData, setResumeData }) {
   const { items: experience, handleDragEnd, addItem, updateItem, removeItem, addPoint, updatePoint, removePoint } =
@@ -35,7 +36,26 @@ export default function ExperienceSection({ resumeData, setResumeData }) {
                 value={exp.position || ""}
                 onChange={(e) => updateItem(index, "position", e.target.value)}
               />
-              <PointsList points={exp.points} itemIndex={index} updatePoint={updatePoint} removePoint={removePoint} addPoint={addPoint} />
+
+              <DateRangePicker
+                startDate={exp.startDate}
+                endDate={exp.endDate}
+                currentLabel="Currently Working Here"
+                onStartDateChange={(value)=>
+                    updateItem(index,"startDate",value)
+                }
+                onEndDateChange={(value)=>
+                    updateItem(index,"endDate",value)
+                }
+              />
+
+              <PointsList
+                points={exp.points}
+                itemIndex={index}
+                updatePoint={updatePoint}
+                removePoint={removePoint}
+                addPoint={addPoint}
+              />
               <button
                 type="button"
                 className="text-red-500 rounded-md p-2 hover:bg-red-500/10 block pt-1 text-sm font-medium transition-colors"

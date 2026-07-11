@@ -3,10 +3,6 @@ import React, { useEffect } from "react";
 export default function ClassicTemplate({ data }) {
   const basics = data.basics || {};
 
-  useEffect(()=>{
-    console.log(data.education[0])
-  },[])
-
   const defaultOrder = [
     { id: "experience", visible: true },
     { id: "projects", visible: true },

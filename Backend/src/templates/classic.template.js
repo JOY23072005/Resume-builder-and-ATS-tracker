@@ -17,14 +17,14 @@ export const classicTemplate = (data = {}) => {
     projects = [],
     skills = [],
     achievements = [],
-    sectionOrder = [
+    section_order = [
       {
         "id": "experience",
         "visible": true
       },
       {
         "id": "projects",
-        "visible": false
+        "visible": true
       },
       {
         "id": "education",
@@ -40,6 +40,7 @@ export const classicTemplate = (data = {}) => {
       },
     ],
   } = data;
+  console.log(data.section_order);
 
   const sectionMap = {
     experience: renderSection(
@@ -128,7 +129,7 @@ export const classicTemplate = (data = {}) => {
 
   ${basics.summary ? `<p class="summary">${escapeHtml(basics.summary)}</p>` : ""}
 
-  ${sectionOrder
+  ${section_order
   .filter((section) => section.visible)
   .map((section) => sectionMap[section.id] || "")
   .join("")}
